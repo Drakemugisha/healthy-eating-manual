@@ -7,24 +7,26 @@ function Home() {
       <main>
         <section className="hero" id="top">
           <div className="container hero-inner">
-            <div className="hero-copy">
-              <p className="eyebrow">Food is the best medicine</p>
-              <h1>THE HEALTH EATING MANUAL.</h1>
-              <p className="lead">
-                A book that shows how to happier, more confident and healthier
-                by just using food
-              </p>
-              <div className="hero-actions">
-                <a href="#signup" className="btn btn-primary">
-                  Get the book today
-                </a>
-                <p className="small-note">
-                  simple guidelines on how to eat better
-                </p>
+            <div className="hero-grid">
+              <div className="hero-logo-block">
+                <img id="logo-image" src={logo} alt="logo of the brand" />
               </div>
-            </div>
-            <div className="logo-image">
-              <img id="logo-image" src={logo} alt="logo of the brand" />
+              <div className="hero-copy">
+                <p className="eyebrow">Food is the best medicine</p>
+                <h1>THE HEALTH EATING MANUAL.</h1>
+                <p className="lead">
+                  A book that shows how to happier, more confident and healthier by just
+                  using food
+                </p>
+                <div className="hero-actions">
+                  <a href="#signup" className="btn btn-primary">
+                    Get the book today
+                  </a>
+                  <p className="small-note">
+                    simple guidelines on how to eat better
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

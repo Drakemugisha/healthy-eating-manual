@@ -83,8 +83,6 @@ img {
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 999px;
-  background: #111827;
   color: #fbbf24;
   font-weight: 700;
 }
@@ -113,6 +111,82 @@ img {
   color: #111827;
 }
 
+.menu-toggle {
+  display: none;
+  padding: 0.4rem 0.6rem;
+  padding-right: 2rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.hamburger-icon {
+  width: 20px;
+  height: 16px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-line {
+  height: 2px;
+  width: 100%;
+  background: #111827;
+  border-radius: 999px;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.menu-toggle.open .hamburger-line:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open .hamburger-line:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobile-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.mobile-nav.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem 1rem;
+}
+
+.mobile-nav-links a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #111827;
+}
+
 .hero {
   background:
     radial-gradient(circle at top left, #f97316 0, transparent 55%),
@@ -123,6 +197,19 @@ img {
 .hero-inner {
   padding: 4.5rem 0 3.5rem;
   max-width: 880px;
+}
+
+.hero-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.hero-logo-block {
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .hero-copy {
@@ -413,9 +500,9 @@ img {
   color: #111827;
 }
 
-.final-cta .btn-primary:hover {
+/* .final-cta .btn-primary:hover {
   background: #e5eeb;
-}
+} */
 
 .site-footer {
   padding: 1.25rem 0 1.6rem;
@@ -431,6 +518,10 @@ img {
 @media (max-width: 900px) {
   .nav {
     display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
   }
 
   .two-column {
@@ -460,6 +551,10 @@ img {
     padding: 3.25rem 0 2.75rem;
   }
 
+  .hero-copy {
+    padding: 0 1rem;
+  }
+
   .cards-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -479,5 +574,20 @@ img {
 
   .section {
     padding: 3rem 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .hero-logo-block {
+    flex: 1.2;
+  }
+
+  .hero-copy {
+    flex: 1.8;
   }
 }
