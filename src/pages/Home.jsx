@@ -15,8 +15,8 @@ function Home() {
                 <p className="eyebrow">Food is the best medicine</p>
                 <h1>THE HEALTH EATING MANUAL.</h1>
                 <p className="lead">
-                  A book that shows how to happier, more confident and healthier by just
-                  using food
+                  A book that shows how to happier, more confident and healthier
+                  by just using food
                 </p>
                 <div className="hero-actions">
                   <a href="#signup" className="btn btn-primary">
