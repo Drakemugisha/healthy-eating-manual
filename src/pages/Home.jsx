@@ -1,9 +1,12 @@
 import "../styles/global.css";
 import logo from "../assets/4E270FD6-30E8-4EE3-AE2B-B89C2AEA0665.png";
+import Navbar from "../components/nav.jsx";
+import Footer from "../components/footer.jsx";
 
 function Home() {
   return (
     <div className="page">
+      <Navbar />
       <main>
         <section className="hero" id="top">
           <div className="container hero-inner">
@@ -94,6 +97,7 @@ function Home() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }
