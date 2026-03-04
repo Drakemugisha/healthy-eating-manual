@@ -225,10 +225,18 @@ img {
 }
 
 .hero h1 {
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
   font-size: clamp(2.4rem, 4vw, 3.1rem);
   line-height: 1.08;
   color: #111827;
+}
+
+.hero-subtitle {
+  margin: 0 0 1rem;
+  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  line-height: 1.2;
+  color: #374151;
+  font-weight: 600;
 }
 
 .lead {
@@ -309,11 +317,26 @@ img {
 .section h2 {
   font-size: 1.9rem;
   margin: 0 0 0.75rem;
+  line-height: 1.2;
 }
 
 .section p {
-  margin: 0;
+  margin: 0 0 0.75rem;
   color: #4b5563;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+.section em {
+  font-style: italic;
+  color: #111827;
+}
+
+.section strong {
+  font-weight: 600;
+  color: #111827;
 }
 
 .two-column {
@@ -329,8 +352,16 @@ img {
 }
 
 .stack h3 {
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.5rem;
   font-size: 1.1rem;
+}
+
+.stack p {
+  margin: 0 0 0.5rem;
+}
+
+.stack p:last-child {
+  margin-bottom: 0;
 }
 
 .steps {
@@ -362,8 +393,15 @@ img {
 }
 
 .step h3 {
-  margin: 0 0 0.3rem;
+  margin: 0 0 0.5rem;
   font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.step p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
 }
 
 .cards-grid {
@@ -387,6 +425,7 @@ img {
 
 .card p {
   font-size: 0.95rem;
+  margin: 0;
 }
 
 .cta-row {
@@ -420,13 +459,17 @@ img {
 }
 
 .feature-list {
-  padding-left: 1rem;
-  margin: 1.1rem 0 1rem;
+  padding-left: 1.2rem;
+  margin: 0.5rem 0 1rem;
   color: #4b5563;
 }
 
+.feature-list li {
+  margin: 0.4rem 0;
+}
+
 .feature-list li + li {
-  margin-top: 0.35rem;
+  margin-top: 0.4rem;
 }
 
 .price-note {
@@ -462,16 +505,19 @@ img {
 
 .faq-list {
   display: grid;
-  gap: 1.2rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .faq-item h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1.02rem;
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #111827;
 }
 
 .faq-item p {
   margin: 0;
+  color: #4b5563;
 }
 
 .final-cta {
@@ -484,15 +530,17 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2.5rem;
 }
 
 .final-cta h2 {
   color: #f9fafb;
+  margin-bottom: 0.75rem;
 }
 
 .final-cta p {
   color: #e5e7eb;
+  margin: 0.5rem 0;
 }
 
 .final-cta .btn-primary {
@@ -500,9 +548,9 @@ img {
   color: #111827;
 }
 
-/* .final-cta .btn-primary:hover {
-  background: #e5eeb;
-} */
+.final-cta .btn-primary:hover {
+  background: #e5e7eb;
+}
 
 .site-footer {
   padding: 1.25rem 0 1.6rem;
