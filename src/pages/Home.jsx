@@ -15,18 +15,20 @@ function Home() {
                 <img id="logo-image" src={logo} alt="logo of the brand" />
               </div>
               <div className="hero-copy">
-                <p className="eyebrow">Food is the best medicine</p>
+                <p className="eyebrow">
+                  Eat better. Feel lighter. Think clever
+                </p>
                 <h1>THE HEALTH EATING MANUAL.</h1>
                 <p className="lead">
-                  A book that shows how to happier, more confident and healthier
-                  by just using food
+                  Stop guessing what’s healthy. Start seeing real results with a
+                  practical non-confusing guide
                 </p>
                 <div className="hero-actions">
                   <a href="#signup" className="btn btn-primary">
-                    Get the book today
+                    Start Your Healthy Reset Today
                   </a>
                   <p className="small-note">
-                    simple guidelines on how to eat better
+                    Simple, affordable habits you can start this week.
                   </p>
                 </div>
               </div>
@@ -37,28 +39,29 @@ function Home() {
         <section className="section alt" id="why">
           <div className="container two-column">
             <div>
-              <h2>You read the book. You got fired up. Then… what?</h2>
+              <h2>you want to eat healthy… but real life gets in the way.</h2>
             </div>
             <div className="stack">
               <div>
-                <h3>You’re stuck on “how.”</h3>
+                <h3>You’re tired of:</h3>
                 <p>
-                  You don’t need more motivation. You need a concrete first
-                  step, then a second, then a third.
+                  <li>Starting diets and quitting after 2 weeks</li>
+                  <li>
+                    Feeling bloated and low-energy Confusing nutrition advice
+                  </li>
+                  <li> Eating “healthy” but seeing no results</li>
+                  <li>onfusing nutrition advice online</li>
                 </p>
               </div>
               <div>
-                <h3>You want proven tools.</h3>
+                <h3>Instead, imagine:</h3>
                 <p>
-                  Get the exact frameworks behind the book: one‑page plans,
-                  launch checklists, and promotion templates.
-                </p>
-              </div>
-              <div>
-                <h3>You want to move faster.</h3>
-                <p>
-                  When you’re ready, a 14‑day guided program walks you from idea
-                  to first sale—no theory, just action.
+                  <li>Waking up with steady energy</li>
+                  <li>Feeling confident in your clothes</li>
+                  <li>
+                    Knowing exactly what to eat at the market or restaurant
+                  </li>
+                  <li>Losing weight without starving yourself</li>
                 </p>
               </div>
             </div>
@@ -67,30 +70,55 @@ function Home() {
 
         <section className="section" id="path">
           <div className="container">
-            <h2>Your path from reader to business owner</h2>
+            <h2>
+              Your path from frustrated eater to confident, healthy living
+            </h2>
             <div className="steps">
               <div className="step">
                 <div className="step-number">1</div>
-                <h3>Join the community</h3>
+                <h3>Understand What Your Body Actually Needs</h3>
                 <p>
-                  Sign up and unlock the free resource library—six focused
-                  guides based on the book’s principles.
+                  Learn how food affects your hormones, energy, cravings, and
+                  weight in simple language.
                 </p>
               </div>
               <div className="step">
                 <div className="step-number">2</div>
-                <h3>Pick a guide and start</h3>
+                <h3>Build Your Personal Eating Framework</h3>
                 <p>
-                  Each guide is designed to produce a real outcome in under an
-                  hour. Start with the one that matches where you are.
+                  Discover how to structure meals that keep you full, satisfied,
+                  and in control.
                 </p>
               </div>
               <div className="step">
                 <div className="step-number">3</div>
-                <h3>Go deeper with Your First Sale</h3>
+                <h3>Create a Lifestyle You Can Sustain</h3>
                 <p>
-                  A 14‑day program that takes you from “I have an idea” to “I
-                  made my first sale.”
+                  No extreme restrictions. No starving. Just repeatable habits
+                  that compound over time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section alt" id="why">
+          <div className="container two-column">
+            <div>
+              <h2>what you'll gain from this book.</h2>
+            </div>
+            <div className="stack">
+              <div>
+                <p>
+                  <li>clear weight-loss principles that actually make sense</li>
+                  <li>
+                    A simple grocery strategy (no expensive “superfoods”
+                    required)
+                  </li>
+                  <li> How to control cravings without willpower battles</li>
+                  <li>A step-by-step healthy eating reset plan</li>
+                  <li>Confidence in your food choices</li>
+                  <li>More energy within weeks</li>
                 </p>
               </div>
             </div>
