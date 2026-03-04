@@ -4,7 +4,8 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
-        <p>the healthy eating manual 2026</p>
+        <p>Start building the habits that future-you will thank you for.</p>
+        <p>Get The Healthy Eating Manual Now</p>
       </div>
     </footer>
   );
