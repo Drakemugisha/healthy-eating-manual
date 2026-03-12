@@ -1,5 +1,5 @@
 import "../styles/global.css";
-import logo from "../assets/4E270FD6-30E8-4EE3-AE2B-B89C2AEA0665.png";
+import logo from "../assets/4E18AC29-0D3C-49D2-A919-15327DE4EFA5.png";
 import Navbar from "../components/nav.jsx";
 import Footer from "../components/footer.jsx";
 
