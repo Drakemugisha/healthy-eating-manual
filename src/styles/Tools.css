@@ -1,16 +1,7 @@
-/* ═══════════════════════════════════════════════
-   Tools Page — Tools.css
-   Scoped styles that layer on top of global.css
-   Drop this file in the same folder as Tools.jsx
-   and import it: import "./Tools.css";
-═══════════════════════════════════════════════ */
-
-/* ── Hero ── */
 .tools-hero {
   background:
-    radial-gradient(circle at top left,  #f97316 0, transparent 50%),
-    radial-gradient(circle at bottom right, #22c55e 0, transparent 50%),
-    #f9fafb;
+    radial-gradient(circle at top left, #f97316 0, transparent 50%),
+    radial-gradient(circle at bottom right, #22c55e 0, transparent 50%), #f9fafb;
   border-bottom: 1px solid #e5e7eb;
   padding: 4rem 0 3rem;
 }
@@ -91,7 +82,9 @@
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .tool-card:hover {
@@ -168,7 +161,9 @@
   background: #f9fafb;
   color: #111827;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
   width: 100%;
 }
 
@@ -309,7 +304,9 @@
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.1s ease;
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease;
   width: 100%;
 }
 
@@ -328,8 +325,14 @@
 }
 
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .result-big {
@@ -377,7 +380,13 @@
   position: relative;
   height: 8px;
   border-radius: 999px;
-  background: linear-gradient(to right, #3b82f6 0%, #22c55e 25%, #f97316 60%, #ef4444 100%);
+  background: linear-gradient(
+    to right,
+    #3b82f6 0%,
+    #22c55e 25%,
+    #f97316 60%,
+    #ef4444 100%
+  );
   margin-bottom: 0.4rem;
 }
 

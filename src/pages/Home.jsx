@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../styles/global.css";
 import "../styles/Home.css";
-import logo from "../assets/4E18AC29-0D3C-49D2-A919-15327DE4EFA5.png";
+// import logo from "../assets/4E18AC29-0D3C-49D2-A919-15327DE4EFA5.png";
 import Navbar from "../components/nav.jsx";
 import Footer from "../components/footer.jsx";
 
@@ -289,12 +289,12 @@ function Home() {
           <div className="container hero-inner">
             <div className="hero-grid">
               <div className="hero-logo-block reveal">
-                <img
+                {/* <img
                   id="logo-image"
                   src={logo}
                   alt="Healthy Eating Manual logo"
                   className="hero-logo-img"
-                />
+                /> */}
                 <PlateIllustration />
               </div>
               <div className="hero-copy">
