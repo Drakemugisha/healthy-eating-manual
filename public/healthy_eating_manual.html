@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Eating Manual</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EC;
+    --sage: #5C7A5A;
+    --sage-light: #8AAB87;
+    --sage-pale: #D4E4D2;
+    --terracotta: #C4623A;
+    --terracotta-light: #E8896B;
+    --gold: #C8963C;
+    --gold-light: #F0C97A;
+    --charcoal: #2C2C2C;
+    --warm-white: #FDFAF5;
+    --ink: #1A1A1A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: var(--sage);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 40px;
+  }
+
+  .cover-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 20%, rgba(200,150,60,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 10% 80%, rgba(92,122,90,0.4) 0%, transparent 60%);
+  }
+
+  .cover-circles {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+
+  .cover-circles circle {
+    fill: none;
+    stroke: rgba(255,255,255,0.07);
+  }
+
+  .cover-plate {
+    position: relative; z-index: 2;
+    width: 220px; height: 220px;
+    margin-bottom: 40px;
+    animation: floatPlate 4s ease-in-out infinite;
+  }
+
+  @keyframes floatPlate {
+    0%,100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-14px) rotate(2deg); }
+  }
+
+  .cover-content { position: relative; z-index: 2; text-align: center; }
+
+  .cover-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 16px;
+  }
+
+  .cover-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(48px, 10vw, 80px);
+    font-weight: 800;
+    color: var(--warm-white);
+    line-height: 0.95;
+    margin-bottom: 20px;
+  }
+
+  .cover-title em {
+    font-style: italic; color: var(--gold-light);
+    font-weight: 300;
+  }
+
+  .cover-subtitle {
+    font-size: 16px; font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    max-width: 380px; line-height: 1.6;
+    margin: 0 auto 36px;
+  }
+
+  .toc-nav {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin-bottom: 40px;
+  }
+
+  .toc-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--warm-white);
+    padding: 8px 18px; border-radius: 100px;
+    font-size: 12px; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all 0.25s;
+    text-decoration: none; display: inline-block;
+  }
+
+  .toc-btn:hover {
+    background: var(--gold); border-color: var(--gold);
+    color: var(--ink); transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 32px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.2em;
+    animation: fadeUpDown 2s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  @keyframes fadeUpDown {
+    0%,100% { opacity: 0.4; transform: translateY(0); }
+    50% { opacity: 0.8; transform: translateY(4px); }
+  }
+
+  /* ── CHAPTERS ── */
+  .chapter {
+    min-height: 100vh;
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ch-intro { background: var(--warm-white); }
+  .ch-maintenance { background: var(--cream); }
+  .ch-loss { background: #F0EBE3; }
+  .ch-gain { background: var(--sage-pale); }
+
+  .chapter-inner {
+    max-width: 860px; margin: 0 auto;
+  }
+
+  .ch-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .tag-green { background: var(--sage-pale); color: var(--sage); }
+  .tag-gold { background: #FDF0D5; color: var(--gold); }
+  .tag-terra { background: #FAE3DA; color: var(--terracotta); }
+  .tag-blue { background: #DAE8F5; color: #3A6C9A; }
+
+  .ch-heading {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 7vw, 60px);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  .ch-heading em {
+    font-style: italic; font-weight: 300;
+    color: var(--sage);
+  }
+
+  .ch-lead {
+    font-size: 17px; font-weight: 300; line-height: 1.75;
+    color: #555; max-width: 620px; margin-bottom: 48px;
+  }
+
+  /* Food Groups Grid */
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px; margin-bottom: 52px;
+  }
+
+  .food-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+
+  .food-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+  }
+
+  .food-icon { font-size: 48px; margin-bottom: 12px; display: block; }
+
+  .food-card h4 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: 15px; margin-bottom: 6px; color: var(--ink);
+  }
+
+  .food-card p { font-size: 12px; color: #777; line-height: 1.5; }
+
+  /* Plate Illustration */
+  .plate-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 40px; align-items: center; margin-bottom: 52px;
+  }
+
+  @media (max-width: 600px) {
+    .plate-section { grid-template-columns: 1fr; }
+  }
+
+  .plate-viz {
+    position: relative; width: 100%; aspect-ratio: 1;
+    max-width: 320px; margin: 0 auto;
+  }
+
+  .plate-viz svg { width: 100%; height: 100%; }
+
+  .plate-text h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px; font-weight: 700;
+    margin-bottom: 14px; color: var(--ink);
+  }
+
+  .plate-rule {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .rule-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 5px;
+  }
+
+  .plate-rule p { font-size: 14px; color: #555; line-height: 1.6; }
+
+  /* Calorie Calculator */
+  .calc-section {
+    background: white;
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    margin-bottom: 48px;
+  }
+
+  .calc-section h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px; font-weight: 700;
+    margin-bottom: 20px; color: var(--ink);
+  }
+
+  .calc-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 16px;
+  }
+
+  @media (max-width: 540px) { .calc-row { grid-template-columns: 1fr; } }
+
+  .calc-field label {
+    display: block; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.05em; color: #888;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  .calc-field input, .calc-field select {
+    width: 100%; padding: 12px 16px;
+    border: 1.5px solid #E8E3DC;
+    border-radius: 12px; font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream); color: var(--ink);
+    outline: none; transition: border-color 0.2s;
+  }
+
+  .calc-field input:focus, .calc-field select:focus {
+    border-color: var(--sage);
+  }
+
+  .calc-btn {
+    background: var(--sage); color: white;
+    border: none; padding: 14px 32px;
+    border-radius: 12px; font-size: 15px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .calc-btn:hover { background: #4A6648; transform: translateY(-2px); }
+
+  .calc-result {
+    margin-top: 20px; padding: 20px;
+    background: var(--sage-pale); border-radius: 14px;
+    display: none;
+  }
+
+  .calc-result.show { display: block; animation: fadeIn 0.4s ease; }
+
+  .result-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px; font-weight: 800; color: var(--sage);
+    line-height: 1;
+  }
+
+  .result-label { font-size: 13px; color: #666; margin-top: 4px; }
+
+  /* Steps */
+  .steps-list {
+    counter-reset: steps;
+    list-style: none; margin-bottom: 48px;
+  }
+
+  .step-item {
+    counter-increment: steps;
+    display: flex; gap: 20px; align-items: flex-start;
+    margin-bottom: 24px;
+    opacity: 0; transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+
+  .step-item.visible {
+    opacity: 1; transform: translateX(0);
+  }
+
+  .step-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .num-green { background: var(--sage); color: white; }
+  .num-gold { background: var(--gold); color: white; }
+  .num-terra { background: var(--terracotta); color: white; }
+  .num-blue { background: #3A6C9A; color: white; }
+
+  .step-body h4 {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    font-weight: 600; margin-bottom: 4px; color: var(--ink);
+  }
+
+  .step-body p { font-size: 14px; color: #666; line-height: 1.7; }
+
+  /* Macro Bars */
+  .macro-bars { margin-bottom: 48px; }
+
+  .macro-bar-row { margin-bottom: 18px; }
+
+  .macro-bar-label {
+    display: flex; justify-content: space-between;
+    font-size: 13px; font-weight: 500; margin-bottom: 6px;
+  }
+
+  .macro-bar-track {
+    height: 10px; background: rgba(0,0,0,0.08);
+    border-radius: 100px; overflow: hidden;
+  }
+
+  .macro-bar-fill {
+    height: 100%; border-radius: 100px;
+    width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* Animated scale */
+  .scale-anim {
+    display: flex; justify-content: center;
+    margin: 40px 0;
+  }
+
+  .scale-anim svg { max-width: 340px; width: 100%; }
+
+  /* Tips pills */
+  .tips-grid {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px;
+  }
+
+  .tip-pill {
+    background: white; border-radius: 100px;
+    padding: 10px 20px; font-size: 13px; color: #555;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    display: flex; align-items: center; gap: 8px;
+    transition: transform 0.2s;
+  }
+
+  .tip-pill:hover { transform: scale(1.04); }
+
+  /* Section divider */
+  .divider {
+    text-align: center; padding: 24px 0; color: var(--sage-light);
+    font-size: 22px; letter-spacing: 12px;
+  }
+
+  /* Big quote */
+  .big-quote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 300; font-style: italic;
+    line-height: 1.4; color: var(--sage);
+    border-left: 4px solid var(--sage-light);
+    padding-left: 28px; margin: 48px 0;
+  }
+
+  /* Progress tracker animation */
+  .progress-track {
+    background: white; border-radius: 20px;
+    padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-bottom: 40px;
+  }
+
+  .progress-track h4 {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    font-weight: 600; margin-bottom: 16px;
+  }
+
+  .week-dots {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+
+  .w-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500;
+    background: #F0EDE8; color: #999;
+    transition: all 0.3s;
+  }
+
+  .w-dot.active { background: var(--sage); color: white; }
+  .w-dot.done { background: var(--sage-pale); color: var(--sage); }
+
+  /* Fade in on scroll */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* Back to top */
+  .back-top {
+    display: block; text-align: center;
+    padding: 60px 24px 80px;
+    background: var(--ink);
+    color: rgba(255,255,255,0.35);
+    font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; text-decoration: none;
+  }
+
+  .back-top span { display: block; font-size: 28px; margin-bottom: 12px; }
+
+  /* Sticky nav */
+  .sticky-nav {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .snav-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer; transition: all 0.2s;
+    border: none; outline: none;
+  }
+
+  .snav-dot.active { background: var(--gold); transform: scale(1.4); }
+
+  /* Highlight box */
+  .highlight-box {
+    border-radius: 18px; padding: 24px 28px;
+    margin: 28px 0;
+  }
+
+  .hb-green { background: #EAF3E8; border-left: 4px solid var(--sage); }
+  .hb-gold { background: #FDF4E2; border-left: 4px solid var(--gold); }
+  .hb-terra { background: #FAEAE3; border-left: 4px solid var(--terracotta); }
+
+  .highlight-box h4 {
+    font-family: 'Fraunces', serif; font-size: 17px;
+    font-weight: 600; margin-bottom: 8px;
+  }
+
+  .highlight-box p { font-size: 14px; color: #666; line-height: 1.7; }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .chapter { padding: 60px 16px; }
+    .calc-section { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav" aria-label="Section navigation">
+  <button class="snav-dot active" onclick="scrollTo('#cover')" title="Cover"></button>
+  <button class="snav-dot" onclick="scrollTo('#ch1')" title="The Role of Food"></button>
+  <button class="snav-dot" onclick="scrollTo('#ch2')" title="Maintenance Calories"></button>
+  <button class="snav-dot" onclick="scrollTo('#ch3')" title="Weight Loss"></button>
+  <button class="snav-dot" onclick="scrollTo('#ch4')" title="Weight Gain"></button>
+</nav>
+
+<!-- ══════════ COVER ══════════ -->
+<section class="cover" id="cover">
+  <svg class="cover-circles" viewBox="0 0 800 800" preserveAspectRatio="none">
+    <circle cx="700" cy="100" r="200" stroke-width="1"/>
+    <circle cx="700" cy="100" r="320" stroke-width="1"/>
+    <circle cx="80" cy="700" r="180" stroke-width="1"/>
+    <circle cx="80" cy="700" r="280" stroke-width="1"/>
+  </svg>
+  <div class="cover-bg"></div>
+
+  <!-- Animated plate SVG -->
+  <svg class="cover-plate" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+    <!-- Plate shadow -->
+    <ellipse cx="110" cy="200" rx="80" ry="12" fill="rgba(0,0,0,0.2)"/>
+    <!-- Plate base -->
+    <circle cx="110" cy="108" r="92" fill="#fff" opacity="0.95"/>
+    <circle cx="110" cy="108" r="72" fill="#F9F6F0"/>
+    <!-- Food sections with animation -->
+    <g>
+      <!-- Veggies (green half) -->
+      <path d="M110 108 L110 40 A68 68 0 0 1 178 108 Z" fill="#7BBD76" opacity="0.9">
+        <animateTransform attributeName="transform" type="rotate" values="0 110 108;5 110 108;0 110 108" dur="3s" repeatCount="indefinite"/>
+      </path>
+      <!-- Protein (terracotta quarter) -->
+      <path d="M110 108 L178 108 A68 68 0 0 1 110 176 Z" fill="#C4623A" opacity="0.85">
+        <animateTransform attributeName="transform" type="rotate" values="0 110 108;-3 110 108;0 110 108" dur="3.5s" repeatCount="indefinite"/>
+      </path>
+      <!-- Carbs (gold quarter) -->
+      <path d="M110 108 L110 176 A68 68 0 0 1 42 108 Z" fill="#C8963C" opacity="0.85">
+        <animateTransform attributeName="transform" type="rotate" values="0 110 108;4 110 108;0 110 108" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <!-- Fats (light quarter) -->
+      <path d="M110 108 L42 108 A68 68 0 0 1 110 40 Z" fill="#85C1BA" opacity="0.85">
+        <animateTransform attributeName="transform" type="rotate" values="0 110 108;-5 110 108;0 110 108" dur="2.8s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <!-- Center circle -->
+    <circle cx="110" cy="108" r="22" fill="white" opacity="0.9"/>
+    <!-- Fork -->
+    <g transform="translate(172, 50)" opacity="0.7">
+      <rect x="0" y="0" width="3" height="28" rx="1.5" fill="white"/>
+      <rect x="-5" y="0" width="2" height="12" rx="1" fill="white"/>
+      <rect x="6" y="0" width="2" height="12" rx="1" fill="white"/>
+    </g>
+    <!-- Labels -->
+    <text x="128" y="78" fill="white" font-size="8" font-family="sans-serif" font-weight="600" text-anchor="middle">50%</text>
+    <text x="148" y="128" fill="white" font-size="8" font-family="sans-serif" font-weight="600" text-anchor="middle">25%</text>
+    <text x="72" y="148" fill="white" font-size="8" font-family="sans-serif" font-weight="600" text-anchor="middle">15%</text>
+    <text x="70" y="78" fill="white" font-size="8" font-family="sans-serif" font-weight="600" text-anchor="middle">10%</text>
+  </svg>
+
+  <div class="cover-content">
+    <p class="cover-label">A complete guide</p>
+    <h1 class="cover-title">Healthy<br><em>Eating</em><br>Manual</h1>
+    <p class="cover-subtitle">Everything you need to understand food, fuel your body, and reach your goals — simply explained.</p>
+
+    <nav class="toc-nav">
+      <a class="toc-btn" href="#ch1">🥦 Role of Food</a>
+      <a class="toc-btn" href="#ch2">⚖️ Maintenance</a>
+      <a class="toc-btn" href="#ch3">🔥 Weight Loss</a>
+      <a class="toc-btn" href="#ch4">💪 Weight Gain</a>
+    </nav>
+  </div>
+
+  <div class="scroll-hint">
+    <span>▼</span>
+    SCROLL TO READ
+  </div>
+</section>
+
+
+<!-- ══════════ CHAPTER 1: ROLE OF FOOD ══════════ -->
+<section class="chapter ch-intro" id="ch1">
+  <div class="chapter-inner">
+
+    <span class="ch-tag tag-green">Chapter 01</span>
+    <h2 class="ch-heading">The Role<br>of <em>Food</em></h2>
+    <p class="ch-lead">Food is not just calories. It is your body's fuel, building material, and medicine. Understanding what each nutrient does helps you make smarter choices every day.</p>
+
+    <!-- Food Groups Grid -->
+    <div class="food-grid fade-in">
+      <div class="food-card">
+        <span class="food-icon">🌾</span>
+        <h4>Carbohydrates</h4>
+        <p>Your body's primary energy source. Opt for whole grains, oats, sweet potato.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🥩</span>
+        <h4>Protein</h4>
+        <p>Builds and repairs muscle tissue. Found in meat, fish, eggs, legumes.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🥑</span>
+        <h4>Healthy Fats</h4>
+        <p>Supports brain function and hormones. Avocado, nuts, olive oil.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🥦</span>
+        <h4>Vegetables</h4>
+        <p>Packed with vitamins and fibre. Fill half your plate with these.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">💧</span>
+        <h4>Water</h4>
+        <p>Regulates every body function. Drink at least 8 glasses (2L) daily.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🍊</span>
+        <h4>Vitamins & Minerals</h4>
+        <p>Micronutrients that keep systems running. Eat a rainbow of colours.</p>
+      </div>
+    </div>
+
+    <div class="big-quote fade-in">
+      "Think of food as information, not just fuel — every bite sends instructions to your body."
+    </div>
+
+    <!-- The Perfect Plate -->
+    <div class="plate-section fade-in">
+      <div class="plate-viz">
+        <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <!-- Shadow -->
+          <ellipse cx="160" cy="295" rx="110" ry="16" fill="rgba(0,0,0,0.1)"/>
+          <!-- Outer rim -->
+          <circle cx="160" cy="155" r="130" fill="#E8E0D5"/>
+          <!-- Plate -->
+          <circle cx="160" cy="155" r="118" fill="white"/>
+          <!-- Veggie half (top) -->
+          <path d="M160 155 L160 38 A117 117 0 0 1 277 155 Z" fill="#7BBD76"/>
+          <path d="M160 155 L160 38 A117 117 0 0 0 43 155 Z" fill="#5CAE56"/>
+          <!-- Protein quarter -->
+          <path d="M160 155 L277 155 A117 117 0 0 1 160 272 Z" fill="#C4623A"/>
+          <!-- Carbs quarter -->
+          <path d="M160 155 L160 272 A117 117 0 0 1 43 155 Z" fill="#C8963C"/>
+          <!-- Inner ring -->
+          <circle cx="160" cy="155" r="40" fill="white"/>
+          <!-- Center logo -->
+          <text x="160" y="148" text-anchor="middle" font-size="22">🍽️</text>
+          <text x="160" y="168" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">My Plate</text>
+
+          <!-- Labels -->
+          <text x="160" y="90" text-anchor="middle" fill="white" font-size="13" font-weight="bold" font-family="sans-serif">Vegetables</text>
+          <text x="160" y="106" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-family="sans-serif">50%</text>
+
+          <text x="230" y="195" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="sans-serif">Protein</text>
+          <text x="230" y="210" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-family="sans-serif">25%</text>
+
+          <text x="90" y="215" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="sans-serif">Carbs</text>
+          <text x="90" y="230" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-family="sans-serif">25%</text>
+        </svg>
+      </div>
+
+      <div class="plate-text">
+        <h3>Build the Perfect Plate</h3>
+        <div class="plate-rule">
+          <div class="rule-dot" style="background:#5CAE56"></div>
+          <p><strong>Half your plate</strong> should be vegetables and fruits. These provide fibre, vitamins, and keep you full.</p>
+        </div>
+        <div class="plate-rule">
+          <div class="rule-dot" style="background:#C4623A"></div>
+          <p><strong>A quarter protein</strong> — chicken, fish, beans, eggs. Aim for a palm-sized portion.</p>
+        </div>
+        <div class="plate-rule">
+          <div class="rule-dot" style="background:#C8963C"></div>
+          <p><strong>A quarter whole grains</strong> — brown rice, whole wheat bread, sweet potato.</p>
+        </div>
+        <div class="plate-rule">
+          <div class="rule-dot" style="background:#3A6C9A"></div>
+          <p><strong>Add healthy fats</strong> in small amounts — a drizzle of olive oil, a few nuts, or half an avocado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Macro Bar Chart -->
+    <div class="macro-bars fade-in" id="macroSection">
+      <h3 style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:20px;">Daily Macro Targets</h3>
+      <div class="macro-bar-row">
+        <div class="macro-bar-label"><span>🌾 Carbohydrates</span><span>45–65% of calories</span></div>
+        <div class="macro-bar-track"><div class="macro-bar-fill" data-w="55" style="background:var(--gold)"></div></div>
+      </div>
+      <div class="macro-bar-row">
+        <div class="macro-bar-label"><span>🥩 Protein</span><span>10–35% of calories</span></div>
+        <div class="macro-bar-track"><div class="macro-bar-fill" data-w="25" style="background:var(--terracotta)"></div></div>
+      </div>
+      <div class="macro-bar-row">
+        <div class="macro-bar-label"><span>🥑 Fats</span><span>20–35% of calories</span></div>
+        <div class="macro-bar-track"><div class="macro-bar-fill" data-w="20" style="background:var(--sage)"></div></div>
+      </div>
+    </div>
+
+    <!-- Simple rules -->
+    <div class="highlight-box hb-green fade-in">
+      <h4>🌿 3 Golden Rules of Eating</h4>
+      <p><strong>1. Eat whole foods</strong> — if it grew from the ground or had a mother, it's probably a good choice.<br>
+      <strong>2. Limit ultra-processed foods</strong> — anything with more than 5 unrecognisable ingredients.<br>
+      <strong>3. Stay hydrated</strong> — drink water before every meal. It aids digestion and reduces overeating.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════ CHAPTER 2: MAINTENANCE ══════════ -->
+<section class="chapter ch-maintenance" id="ch2">
+  <div class="chapter-inner">
+
+    <span class="ch-tag tag-gold">Chapter 02</span>
+    <h2 class="ch-heading">Maintenance<br><em>Calories</em></h2>
+    <p class="ch-lead">Maintenance calories are how many you need to eat per day to stay exactly the same weight. Eat this amount and your body is in perfect balance.</p>
+
+    <!-- What is TDEE illustration -->
+    <div class="fade-in" style="text-align:center;margin-bottom:40px;">
+      <svg viewBox="0 0 500 140" xmlns="http://www.w3.org/2000/svg" style="max-width:500px;width:100%">
+        <!-- Arrows and balance -->
+        <rect x="20" y="50" width="120" height="40" rx="12" fill="#FDF0D5"/>
+        <text x="80" y="67" text-anchor="middle" font-size="11" fill="#C8963C" font-family="sans-serif" font-weight="600">CALORIES IN</text>
+        <text x="80" y="83" text-anchor="middle" font-size="22" font-family="sans-serif">🍽️</text>
+
+        <text x="190" y="75" text-anchor="middle" font-size="24" fill="#C8963C">⚖️</text>
+
+        <rect x="240" y="50" width="120" height="40" rx="12" fill="#EAF3E8"/>
+        <text x="300" y="67" text-anchor="middle" font-size="11" fill="#5C7A5A" font-family="sans-serif" font-weight="600">CALORIES OUT</text>
+        <text x="300" y="83" text-anchor="middle" font-size="22" font-family="sans-serif">🏃</text>
+
+        <text x="400" y="75" text-anchor="middle" font-size="22" fill="#888">→</text>
+
+        <rect x="420" y="45" width="70" height="50" rx="12" fill="#F7F3EC" stroke="#C8963C" stroke-width="1.5"/>
+        <text x="455" y="68" text-anchor="middle" font-size="10" fill="#888" font-family="sans-serif">RESULT</text>
+        <text x="455" y="85" text-anchor="middle" font-size="13" fill="#C8963C" font-family="sans-serif" font-weight="700">Stable ✓</text>
+
+        <!-- Labels -->
+        <text x="80" y="110" text-anchor="middle" font-size="10" fill="#999" font-family="sans-serif">Food &amp; drinks</text>
+        <text x="300" y="110" text-anchor="middle" font-size="10" fill="#999" font-family="sans-serif">BMR + Activity</text>
+      </svg>
+    </div>
+
+    <!-- TDEE Calculator -->
+    <div class="calc-section fade-in">
+      <h3>⚡ Calculate Your Maintenance Calories (TDEE)</h3>
+      <p style="font-size:13px;color:#888;margin-bottom:20px;">TDEE = Total Daily Energy Expenditure — the number of calories you burn in a day.</p>
+
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Age (years)</label>
+          <input type="number" id="age" placeholder="e.g. 28" min="10" max="100"/>
+        </div>
+        <div class="calc-field">
+          <label>Sex</label>
+          <select id="sex">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Weight (kg)</label>
+          <input type="number" id="weight" placeholder="e.g. 70" min="30" max="300"/>
+        </div>
+        <div class="calc-field">
+          <label>Height (cm)</label>
+          <input type="number" id="height" placeholder="e.g. 170" min="100" max="250"/>
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-field" style="grid-column:1/-1">
+          <label>Activity Level</label>
+          <select id="activity">
+            <option value="1.2">Sedentary (desk job, little exercise)</option>
+            <option value="1.375">Lightly active (1–3 days/week)</option>
+            <option value="1.55" selected>Moderately active (3–5 days/week)</option>
+            <option value="1.725">Very active (6–7 days/week)</option>
+            <option value="1.9">Extra active (physical job + daily training)</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcTDEE()">Calculate My Calories →</button>
+
+      <div class="calc-result" id="calcResult">
+        <div style="display:flex;gap:32px;flex-wrap:wrap;">
+          <div>
+            <div class="result-num" id="tdeeVal">—</div>
+            <div class="result-label">Maintenance Calories / day</div>
+          </div>
+          <div>
+            <div class="result-num" style="color:var(--terracotta)" id="lossVal">—</div>
+            <div class="result-label">Weight Loss (−500 kcal)</div>
+          </div>
+          <div>
+            <div class="result-num" style="color:var(--sage)" id="gainVal">—</div>
+            <div class="result-label">Weight Gain (+300 kcal)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What burns calories -->
+    <h3 class="fade-in" style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:20px;">What Burns Your Calories?</h3>
+    <div class="food-grid fade-in" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+      <div class="food-card">
+        <span class="food-icon">🫀</span>
+        <h4>BMR</h4>
+        <p>Just existing — breathing, heartbeat, digestion. ~60–70% of total.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🏋️</span>
+        <h4>Exercise</h4>
+        <p>Intentional workouts. Varies hugely by intensity.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🚶</span>
+        <h4>NEAT</h4>
+        <p>Walking, fidgeting, housework. Often underestimated.</p>
+      </div>
+      <div class="food-card">
+        <span class="food-icon">🍴</span>
+        <h4>Digestion</h4>
+        <p>Thermic effect of food — ~10% of intake goes to digesting.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box hb-gold fade-in">
+      <h4>💡 Simple Maintenance Rule</h4>
+      <p>A common rough estimate: <strong>body weight (kg) × 33 = maintenance calories</strong>. For example, a 70 kg person needs roughly 2,300 kcal/day. Use the calculator above for a more accurate number.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════ CHAPTER 3: WEIGHT LOSS ══════════ -->
+<section class="chapter ch-loss" id="ch3">
+  <div class="chapter-inner">
+
+    <span class="ch-tag tag-terra">Chapter 03</span>
+    <h2 class="ch-heading">Losing<br><em>Weight</em></h2>
+    <p class="ch-lead">Weight loss is simply eating fewer calories than you burn. The key is doing it in a sustainable, healthy way — not crash dieting.</p>
+
+    <!-- Calorie deficit animation -->
+    <div class="scale-anim fade-in">
+      <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" id="deficitScale">
+        <!-- Base -->
+        <rect x="155" y="155" width="30" height="40" rx="4" fill="#DDD"/>
+        <rect x="120" y="190" width="100" height="8" rx="4" fill="#CCC"/>
+
+        <!-- Beam - tilted left (less food = deficit) -->
+        <g id="scaleBeam" style="transform-origin:170px 155px;animation:tiltBeam 3s ease-in-out infinite">
+          <rect x="60" y="150" width="220" height="7" rx="3.5" fill="#888"/>
+          <!-- Left pan (food - lighter) -->
+          <line x1="80" y1="157" x2="80" y2="100" stroke="#AAA" stroke-width="2"/>
+          <rect x="40" y="95" width="80" height="8" rx="4" fill="#C4623A" opacity="0.9"/>
+          <text x="80" y="87" text-anchor="middle" font-size="22" font-family="sans-serif">🍽️</text>
+          <text x="80" y="120" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif" font-weight="700">FOOD IN</text>
+          <text x="80" y="133" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">1,800 kcal</text>
+
+          <!-- Right pan (burn - heavier) -->
+          <line x1="260" y1="157" x2="260" y2="80" stroke="#AAA" stroke-width="2"/>
+          <rect x="220" y="75" width="80" height="8" rx="4" fill="#5C7A5A" opacity="0.9"/>
+          <text x="260" y="67" text-anchor="middle" font-size="22" font-family="sans-serif">🔥</text>
+          <text x="260" y="100" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif" font-weight="700">CALORIES BURNED</text>
+          <text x="260" y="113" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">2,300 kcal</text>
+        </g>
+
+        <text x="170" y="178" text-anchor="middle" font-size="11" fill="#C4623A" font-family="sans-serif" font-weight="700">DEFICIT = WEIGHT LOSS ↓</text>
+      </svg>
+    </div>
+
+    <style>
+      @keyframes tiltBeam {
+        0%,100% { transform: rotate(-8deg); }
+        50% { transform: rotate(-12deg); }
+      }
+    </style>
+
+    <!-- Steps for weight loss -->
+    <h3 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:24px;" class="fade-in">How to Lose Weight — Step by Step</h3>
+    <ul class="steps-list">
+      <li class="step-item">
+        <div class="step-num num-terra">1</div>
+        <div class="step-body">
+          <h4>Find Your TDEE</h4>
+          <p>Use the calculator in Chapter 2. This is your starting point. You need to eat below this number.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-terra">2</div>
+        <div class="step-body">
+          <h4>Create a Moderate Deficit</h4>
+          <p>Subtract 300–500 kcal from your TDEE. This leads to safe, steady fat loss of 0.3–0.5 kg per week. Avoid going below 1,200 kcal (women) or 1,500 kcal (men).</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-terra">3</div>
+        <div class="step-body">
+          <h4>Eat High-Volume, Low-Calorie Foods</h4>
+          <p>Fill your plate with vegetables, lean proteins, and fibre. These keep you full without spiking calories. Avoid liquid calories — sodas, juices, alcohol.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-terra">4</div>
+        <div class="step-body">
+          <h4>Prioritise Protein</h4>
+          <p>Aim for 1.6–2.2g of protein per kg of body weight. Protein keeps you full and preserves muscle while losing fat.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-terra">5</div>
+        <div class="step-body">
+          <h4>Move More Daily</h4>
+          <p>Add walking, light cardio, or resistance training. Even 30 mins of walking burns ~150 extra kcal and improves energy.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-terra">6</div>
+        <div class="step-body">
+          <h4>Be Patient & Consistent</h4>
+          <p>1 kg of fat = ~7,700 kcal. At a 500 kcal daily deficit, expect to lose ~1 kg every 2 weeks. Slow and steady wins.</p>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Best weight loss foods -->
+    <h3 style="font-family:'Fraunces',serif;font-size:20px;margin-bottom:16px;" class="fade-in">Best Foods for Weight Loss</h3>
+    <div class="tips-grid fade-in">
+      <div class="tip-pill">🥚 Eggs — high protein, low calorie</div>
+      <div class="tip-pill">🐟 Salmon — protein + healthy fats</div>
+      <div class="tip-pill">🥦 Broccoli — fibre, very filling</div>
+      <div class="tip-pill">🍗 Chicken breast — lean protein</div>
+      <div class="tip-pill">🫘 Lentils & beans — fibre + protein</div>
+      <div class="tip-pill">🫐 Berries — low sugar, antioxidants</div>
+      <div class="tip-pill">🥗 Leafy greens — almost zero calories</div>
+      <div class="tip-pill">💧 Water — zero calories, fills you up</div>
+    </div>
+
+    <div class="highlight-box hb-terra fade-in">
+      <h4>⚠️ What to Avoid</h4>
+      <p>Skip ultra-processed snacks, sugary drinks, fast food, and alcohol — they are calorie-dense with little nutrition. You don't need to ban them, but limit them to rare occasions.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════ CHAPTER 4: WEIGHT GAIN ══════════ -->
+<section class="chapter ch-gain" id="ch4">
+  <div class="chapter-inner">
+
+    <span class="ch-tag tag-blue">Chapter 04</span>
+    <h2 class="ch-heading">Gaining<br><em>Weight</em></h2>
+    <p class="ch-lead">Healthy weight gain means building muscle and adding useful mass — not simply eating junk food. It requires a calorie surplus plus the right nutrients.</p>
+
+    <!-- Surplus animation -->
+    <div class="scale-anim fade-in">
+      <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="155" y="155" width="30" height="40" rx="4" fill="#DDD"/>
+        <rect x="120" y="190" width="100" height="8" rx="4" fill="#CCC"/>
+
+        <g style="transform-origin:170px 155px;animation:tiltRight 3s ease-in-out infinite">
+          <rect x="60" y="150" width="220" height="7" rx="3.5" fill="#888"/>
+          <!-- Left pan (food - heavier) -->
+          <line x1="80" y1="157" x2="80" y2="80" stroke="#AAA" stroke-width="2"/>
+          <rect x="40" y="75" width="80" height="8" rx="4" fill="#3A6C9A" opacity="0.9"/>
+          <text x="80" y="67" text-anchor="middle" font-size="22" font-family="sans-serif">🍽️</text>
+          <text x="80" y="100" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif" font-weight="700">FOOD IN</text>
+          <text x="80" y="113" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">2,600 kcal</text>
+
+          <!-- Right pan (burn - lighter) -->
+          <line x1="260" y1="157" x2="260" y2="100" stroke="#AAA" stroke-width="2"/>
+          <rect x="220" y="95" width="80" height="8" rx="4" fill="#5C7A5A" opacity="0.9"/>
+          <text x="260" y="87" text-anchor="middle" font-size="22" font-family="sans-serif">🔥</text>
+          <text x="260" y="120" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif" font-weight="700">CALORIES BURNED</text>
+          <text x="260" y="133" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">2,300 kcal</text>
+        </g>
+
+        <text x="170" y="178" text-anchor="middle" font-size="11" fill="#3A6C9A" font-family="sans-serif" font-weight="700">SURPLUS = WEIGHT GAIN ↑</text>
+      </svg>
+    </div>
+
+    <style>
+      @keyframes tiltRight {
+        0%,100% { transform: rotate(8deg); }
+        50% { transform: rotate(12deg); }
+      }
+    </style>
+
+    <!-- Steps for weight gain -->
+    <h3 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:24px;" class="fade-in">How to Gain Weight — Step by Step</h3>
+    <ul class="steps-list">
+      <li class="step-item">
+        <div class="step-num num-blue">1</div>
+        <div class="step-body">
+          <h4>Calculate Your Surplus</h4>
+          <p>Take your TDEE and add 250–500 kcal per day. A smaller surplus (250 kcal) builds muscle with minimal fat. Bigger surpluses add weight faster but more fat too.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-blue">2</div>
+        <div class="step-body">
+          <h4>Eat Enough Protein</h4>
+          <p>1.6–2.2g per kg of body weight. Protein is the raw material for muscle. Think eggs, chicken, beef, fish, Greek yoghurt, cottage cheese.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-blue">3</div>
+        <div class="step-body">
+          <h4>Eat Calorie-Dense Whole Foods</h4>
+          <p>Nuts, nut butter, avocado, whole milk, olive oil, oats, rice, sweet potato, bananas. These pack a lot of nutrition into reasonable portions.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-blue">4</div>
+        <div class="step-body">
+          <h4>Eat More Frequently</h4>
+          <p>If you struggle to eat enough, split your calories into 4–6 meals. Add healthy snacks: trail mix, smoothies, cheese, peanut butter on whole grain toast.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-blue">5</div>
+        <div class="step-body">
+          <h4>Resistance Train</h4>
+          <p>Lift weights or do bodyweight exercises 3–4× per week. This directs extra calories into muscle growth rather than fat storage.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num num-blue">6</div>
+        <div class="step-body">
+          <h4>Sleep & Recover</h4>
+          <p>Muscles grow during sleep. Aim for 7–9 hours per night. Poor sleep spikes cortisol, which slows muscle building.</p>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Best gain foods -->
+    <h3 style="font-family:'Fraunces',serif;font-size:20px;margin-bottom:16px;" class="fade-in">Best Foods for Healthy Weight Gain</h3>
+    <div class="tips-grid fade-in">
+      <div class="tip-pill">🥜 Peanut butter — calorie-dense</div>
+      <div class="tip-pill">🥛 Whole milk — protein + fat</div>
+      <div class="tip-pill">🍌 Bananas — carbs + potassium</div>
+      <div class="tip-pill">🧀 Cheese — protein + healthy fat</div>
+      <div class="tip-pill">🥩 Red meat — iron + creatine</div>
+      <div class="tip-pill">🌰 Mixed nuts — calorie dense snack</div>
+      <div class="tip-pill">🍚 Brown rice — complex carbs</div>
+      <div class="tip-pill">🫙 Greek yoghurt — protein + probiotics</div>
+    </div>
+
+    <!-- Sample meal plan -->
+    <div class="progress-track fade-in">
+      <h4>📋 Sample 2,800 kcal Gain Day</h4>
+      <div style="margin-top:8px;">
+        <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #E8E3DC;">
+          <span style="font-size:20px;">🌅</span>
+          <div>
+            <div style="font-size:13px;font-weight:500;">Breakfast (~650 kcal)</div>
+            <div style="font-size:12px;color:#888;">3 eggs + 2 slices whole grain toast + peanut butter + banana + milk</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #E8E3DC;">
+          <span style="font-size:20px;">🕙</span>
+          <div>
+            <div style="font-size:13px;font-weight:500;">Snack (~300 kcal)</div>
+            <div style="font-size:12px;color:#888;">Greek yoghurt + mixed nuts + honey</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #E8E3DC;">
+          <span style="font-size:20px;">☀️</span>
+          <div>
+            <div style="font-size:13px;font-weight:500;">Lunch (~750 kcal)</div>
+            <div style="font-size:12px;color:#888;">Chicken breast + brown rice + avocado + vegetables + olive oil</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #E8E3DC;">
+          <span style="font-size:20px;">🕔</span>
+          <div>
+            <div style="font-size:13px;font-weight:500;">Post-Workout Snack (~350 kcal)</div>
+            <div style="font-size:12px;color:#888;">Protein smoothie: milk + banana + oats + peanut butter</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;padding:10px 0;">
+          <span style="font-size:20px;">🌙</span>
+          <div>
+            <div style="font-size:13px;font-weight:500;">Dinner (~750 kcal)</div>
+            <div style="font-size:12px;color:#888;">Salmon + sweet potato + steamed broccoli + whole grain bread</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box hb-green fade-in">
+      <h4>💡 The Golden Rule for Gaining</h4>
+      <p>Eat more than you burn, train with weights, and get enough sleep. Without resistance training, your body will store most of the surplus as fat rather than muscle. Combine food + exercise for best results.</p>
+    </div>
+
+    <!-- Final quote -->
+    <div class="big-quote fade-in">
+      "Whether your goal is to lose, maintain, or gain — the foundation is always the same: whole foods, adequate protein, and consistency."
+    </div>
+
+  </div>
+</section>
+
+<!-- BACK TO TOP -->
+<a href="#cover" class="back-top">
+  <span>↑</span>
+  BACK TO TOP — HEALTHY EATING MANUAL
+</a>
+
+<script>
+  // ── TDEE CALCULATOR ──
+  function calcTDEE() {
+    const age = parseFloat(document.getElementById('age').value);
+    const sex = document.getElementById('sex').value;
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
+    const activity = parseFloat(document.getElementById('activity').value);
+
+    if (!age || !weight || !height) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    let bmr;
+    if (sex === 'male') {
+      bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+      bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+    }
+
+    const tdee = Math.round(bmr * activity);
+    document.getElementById('tdeeVal').textContent = tdee.toLocaleString();
+    document.getElementById('lossVal').textContent = (tdee - 500).toLocaleString();
+    document.getElementById('gainVal').textContent = (tdee + 300).toLocaleString();
+
+    const result = document.getElementById('calcResult');
+    result.classList.add('show');
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── SCROLL ANIMATIONS ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate macro bars
+        if (entry.target.id === 'macroSection') {
+          setTimeout(() => {
+            document.querySelectorAll('.macro-bar-fill').forEach(bar => {
+              bar.style.width = bar.dataset.w + '%';
+            });
+          }, 200);
+        }
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in, .step-item').forEach(el => observer.observe(el));
+
+  // ── STICKY NAV ──
+  const sections = ['cover','ch1','ch2','ch3','ch4'];
+  const dots = document.querySelectorAll('.snav-dot');
+
+  const secObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = sections.indexOf(entry.target.id);
+        dots.forEach(d => d.classList.remove('active'));
+        if (idx >= 0) dots[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) secObserver.observe(el);
+  });
+
+  function scrollTo(selector) {
+    document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Enter key for calculator
+  document.querySelectorAll('.calc-field input').forEach(inp => {
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') calcTDEE(); });
+  });
+</script>
+</body>
+</html>

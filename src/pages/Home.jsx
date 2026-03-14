@@ -28,7 +28,10 @@ function Home() {
                   actually stick — without extreme dieting or expensive foods.
                 </p>
                 <div className="hero-actions">
-                  <a href="#signup" className="btn btn-primary">
+                  <a
+                    href="https://healthyeatingmanual.site/healthy_eating_manual.html"
+                    className="btn btn-primary"
+                  >
                     Start Your Healthy Reset Today
                   </a>
                   <p className="small-note">
@@ -337,7 +340,10 @@ function Home() {
                 </ul>
               </div>
               <div>
-                <a href="#" className="btn btn-primary">
+                <a
+                  href="https://healthyeatingmanual.site/healthy_eating_manual.html"
+                  className="btn btn-primary"
+                >
                   Get Instant Access Now
                 </a>
                 <p
