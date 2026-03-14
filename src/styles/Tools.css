@@ -1,0 +1,624 @@
+/* ═══════════════════════════════════════════════
+   Tools Page — Tools.css
+   Scoped styles that layer on top of global.css
+   Drop this file in the same folder as Tools.jsx
+   and import it: import "./Tools.css";
+═══════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.tools-hero {
+  background:
+    radial-gradient(circle at top left,  #f97316 0, transparent 50%),
+    radial-gradient(circle at bottom right, #22c55e 0, transparent 50%),
+    #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 4rem 0 3rem;
+}
+
+.tools-hero h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.1;
+  color: #111827;
+}
+
+/* ── Tab bar ── */
+.tools-tabs-bar {
+  position: sticky;
+  top: 57px;
+  z-index: 10;
+  background: rgba(249, 250, 251, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tools-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.6rem 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tools-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tools-tab {
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.tools-tab:hover {
+  color: #111827;
+  background: #f3f4f6;
+}
+
+.tools-tab.active {
+  background: #111827;
+  color: #f9fafb;
+  border-color: #111827;
+}
+
+/* ── Grid ── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+@media (max-width: 860px) {
+  .tools-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Tool Card ── */
+.tool-card {
+  background: white;
+  border-radius: 1.25rem;
+  padding: 1.75rem 1.6rem 1.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.tool-card:hover {
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px);
+}
+
+.tool-icon-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.tool-emoji {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tool-title {
+  margin: 0 0 0.2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.tool-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* ── Inputs ── */
+.tool-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.tool-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.tool-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.tool-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  grid-column: 1 / -1;
+}
+
+.tool-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+}
+
+.tool-field input,
+.tool-field select {
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.6rem;
+  border: 1.5px solid #e5e7eb;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #f9fafb;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+}
+
+.tool-field input:focus,
+.tool-field select:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.08);
+  background: white;
+}
+
+/* ── Unit Toggle ── */
+.unit-toggle {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.unit-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.unit-btn:hover {
+  border-color: #111827;
+  color: #111827;
+}
+
+.unit-btn.active {
+  background: #111827;
+  border-color: #111827;
+  color: white;
+}
+
+/* ── Activity Options (TDEE) ── */
+.activity-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.activity-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1.5px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.activity-btn:hover {
+  border-color: #111827;
+  background: white;
+}
+
+.activity-btn.active {
+  background: #111827;
+  border-color: #111827;
+  color: white;
+}
+
+.activity-btn.active .act-sub {
+  color: #9ca3af;
+}
+
+.act-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.act-sub {
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+/* ── Activity Grid (Calorie Burn) ── */
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem;
+}
+
+.activity-card-btn {
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.6rem;
+  border: 1.5px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.activity-card-btn:hover {
+  border-color: #111827;
+  background: white;
+}
+
+.activity-card-btn.active {
+  background: #111827;
+  border-color: #111827;
+  color: white;
+}
+
+/* ── Calculate Button ── */
+.tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  border: none;
+  background: #111827;
+  color: #f9fafb;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  width: 100%;
+}
+
+.tool-btn:hover {
+  background: #020617;
+  transform: translateY(-1px);
+}
+
+/* ── Result Area ── */
+.tool-result {
+  background: #f9fafb;
+  border-radius: 0.9rem;
+  padding: 1.2rem 1.1rem;
+  border: 1px solid #e5e7eb;
+  animation: fadeSlideUp 0.3s ease both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-big {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.result-number {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.result-unit {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.result-badge {
+  display: inline-flex;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.result-tip {
+  margin: 0.6rem 0 0;
+  font-size: 0.83rem;
+  color: #6b7280;
+  line-height: 1.55;
+}
+
+/* ── BMI Bar ── */
+.bmi-bar-wrap {
+  margin: 0.5rem 0;
+}
+
+.bmi-bar-track {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #3b82f6 0%, #22c55e 25%, #f97316 60%, #ef4444 100%);
+  margin-bottom: 0.4rem;
+}
+
+.bmi-bar-fill {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid white;
+  box-shadow: 0 0 0 2px currentColor;
+  transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bmi-zones {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin-top: 0.4rem;
+}
+
+/* ── TDEE Grid ── */
+.tdee-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 500px) {
+  .tdee-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tdee-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.8rem;
+  border-radius: 0.75rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+
+.tdee-cell .result-number {
+  font-size: 1.8rem;
+}
+
+.result-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.result-sub {
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+/* ── Macro Grid ── */
+.macro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 460px) {
+  .macro-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.macro-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 0.75rem;
+  border-radius: 0.75rem;
+  background: white;
+  border-left: 3px solid;
+  border-top: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.macro-number {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.macro-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.macro-pct {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-bottom: 0.3rem;
+}
+
+.macro-bar {
+  height: 5px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.macro-bar-inner {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Ideal Body Weight ── */
+.ibw-range {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.ibw-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+}
+
+.ibw-numbers {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.ibw-unit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.ibw-formulas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.ibw-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+}
+
+.ibw-row strong {
+  color: #111827;
+  font-weight: 700;
+}
+
+/* ── Water Display ── */
+.water-display {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.water-bottle {
+  position: relative;
+  width: 52px;
+  height: 90px;
+  border-radius: 8px 8px 10px 10px;
+  border: 2px solid #93c5fd;
+  background: #eff6ff;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, #3b82f6, #93c5fd);
+  transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.water-litres {
+  position: relative;
+  z-index: 1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.water-stats {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.water-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.water-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #3b82f6;
+  line-height: 1;
+}
+
+.water-label {
+  font-size: 0.72rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* ── Calorie Burn ── */
+.burn-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.burn-number {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #f97316;
+  line-height: 1;
+}
+
+.burn-unit {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+}
