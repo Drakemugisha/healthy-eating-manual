@@ -4,19 +4,119 @@ import "../styles/Tools.css";
 import Navbar from "../components/nav.jsx";
 import Footer from "../components/footer.jsx";
 
-/* ─────────────────────────────────────────────
-   TOOL: BMI Calculator
-───────────────────────────────────────────── */
+/* ─── unit helpers ─────────────────────────── */
+const kgToLbs = (kg) => +(kg * 2.20462).toFixed(1);
+const lbsToKg = (lbs) => +(lbs / 2.20462).toFixed(2);
+const cmToInch = (cm) => +(cm / 2.54).toFixed(1);
+const inchToCm = (inch) => +(inch * 2.54).toFixed(1);
+const ftInToCm = (ft, inch) =>
+  inchToCm(parseFloat(ft || 0) * 12 + parseFloat(inch || 0));
+
+/* ─── Unit Toggle ───────────────────────────── */
+function UnitToggle({ unit, onChange }) {
+  return (
+    <div className="unit-toggle">
+      <button
+        className={`unit-btn ${unit === "metric" ? "active" : ""}`}
+        onClick={() => onChange("metric")}
+      >
+        🌍 Metric (kg / cm)
+      </button>
+      <button
+        className={`unit-btn ${unit === "imperial" ? "active" : ""}`}
+        onClick={() => onChange("imperial")}
+      >
+        🇺🇸 Imperial (lbs / ft)
+      </button>
+    </div>
+  );
+}
+
+/* ─── Height input ──────────────────────────── */
+function HeightInput({ unit, cm, setCm, ft, setFt, inch, setInch }) {
+  if (unit === "metric") {
+    return (
+      <div className="tool-field">
+        <label>Height (cm)</label>
+        <input
+          type="number"
+          placeholder="e.g. 170"
+          value={cm}
+          onChange={(e) => setCm(e.target.value)}
+        />
+      </div>
+    );
+  }
+  return (
+    <>
+      <div className="tool-field">
+        <label>Height (ft)</label>
+        <input
+          type="number"
+          placeholder="5"
+          value={ft}
+          onChange={(e) => setFt(e.target.value)}
+        />
+      </div>
+      <div className="tool-field">
+        <label>Height (in)</label>
+        <input
+          type="number"
+          placeholder="7"
+          value={inch}
+          onChange={(e) => setInch(e.target.value)}
+        />
+      </div>
+    </>
+  );
+}
+
+/* ─── Weight input ──────────────────────────── */
+function WeightInput({ unit, kg, setKg, lbs, setLbs }) {
+  if (unit === "metric") {
+    return (
+      <div className="tool-field">
+        <label>Weight (kg)</label>
+        <input
+          type="number"
+          placeholder="e.g. 70"
+          value={kg}
+          onChange={(e) => setKg(e.target.value)}
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="tool-field">
+      <label>Weight (lbs)</label>
+      <input
+        type="number"
+        placeholder="e.g. 154"
+        value={lbs}
+        onChange={(e) => setLbs(e.target.value)}
+      />
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
+   TOOL 1 — BMI Calculator
+══════════════════════════════════════════════ */
 function BMICalculator() {
   const [unit, setUnit] = useState("metric");
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
-  const [weightLbs, setWeightLbs] = useState("");
-  const [heightFt, setHeightFt] = useState("");
-  const [heightIn, setHeightIn] = useState("");
+  const [kg, setKg] = useState("");
+  const [lbs, setLbs] = useState("");
+  const [cm, setCm] = useState("");
+  const [ft, setFt] = useState("");
+  const [inch, setInch] = useState("");
   const [result, setResult] = useState(null);
 
-  const getBMICategory = (bmi) => {
+  const reset = (u) => {
+    setUnit(u);
+    setResult(null);
+  };
+
+  const getCategory = (bmi) => {
     if (bmi < 18.5)
       return {
         label: "Underweight",
@@ -43,24 +143,15 @@ function BMICalculator() {
   };
 
   const calculate = () => {
-    let bmi;
-    if (unit === "metric") {
-      const w = parseFloat(weight);
-      const h = parseFloat(height) / 100;
-      if (!w || !h) return;
-      bmi = w / (h * h);
-    } else {
-      const w = parseFloat(weightLbs);
-      const ft = parseFloat(heightFt) || 0;
-      const ins = parseFloat(heightIn) || 0;
-      const totalIn = ft * 12 + ins;
-      if (!w || !totalIn) return;
-      bmi = (703 * w) / (totalIn * totalIn);
-    }
-    setResult(Math.round(bmi * 10) / 10);
+    const weightKg =
+      unit === "metric" ? parseFloat(kg) : lbsToKg(parseFloat(lbs));
+    const heightM =
+      unit === "metric" ? parseFloat(cm) / 100 : ftInToCm(ft, inch) / 100;
+    if (!weightKg || !heightM) return;
+    setResult(+(weightKg / (heightM * heightM)).toFixed(1));
   };
 
-  const category = result ? getBMICategory(result) : null;
+  const cat = result ? getCategory(result) : null;
   const barPct = result
     ? Math.min(Math.max(((result - 10) / 30) * 100, 2), 98)
     : 0;
@@ -76,91 +167,32 @@ function BMICalculator() {
           </p>
         </div>
       </div>
-
-      <div className="unit-toggle">
-        <button
-          className={`unit-btn ${unit === "metric" ? "active" : ""}`}
-          onClick={() => {
-            setUnit("metric");
-            setResult(null);
-          }}
-        >
-          Metric (kg/cm)
-        </button>
-        <button
-          className={`unit-btn ${unit === "imperial" ? "active" : ""}`}
-          onClick={() => {
-            setUnit("imperial");
-            setResult(null);
-          }}
-        >
-          Imperial (lbs/ft)
-        </button>
+      <UnitToggle unit={unit} onChange={reset} />
+      <div className="tool-inputs">
+        <WeightInput
+          unit={unit}
+          kg={kg}
+          setKg={setKg}
+          lbs={lbs}
+          setLbs={setLbs}
+        />
+        <HeightInput
+          unit={unit}
+          cm={cm}
+          setCm={setCm}
+          ft={ft}
+          setFt={setFt}
+          inch={inch}
+          setInch={setInch}
+        />
       </div>
-
-      {unit === "metric" ? (
-        <div className="tool-inputs">
-          <div className="tool-field">
-            <label>Weight (kg)</label>
-            <input
-              type="number"
-              placeholder="e.g. 70"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-            />
-          </div>
-          <div className="tool-field">
-            <label>Height (cm)</label>
-            <input
-              type="number"
-              placeholder="e.g. 170"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-            />
-          </div>
-        </div>
-      ) : (
-        <div className="tool-inputs">
-          <div className="tool-field">
-            <label>Weight (lbs)</label>
-            <input
-              type="number"
-              placeholder="e.g. 154"
-              value={weightLbs}
-              onChange={(e) => setWeightLbs(e.target.value)}
-            />
-          </div>
-          <div className="tool-field-row">
-            <div className="tool-field">
-              <label>Height (ft)</label>
-              <input
-                type="number"
-                placeholder="5"
-                value={heightFt}
-                onChange={(e) => setHeightFt(e.target.value)}
-              />
-            </div>
-            <div className="tool-field">
-              <label>Height (in)</label>
-              <input
-                type="number"
-                placeholder="7"
-                value={heightIn}
-                onChange={(e) => setHeightIn(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
       <button className="tool-btn" onClick={calculate}>
         Calculate BMI
       </button>
-
-      {result && category && (
+      {result && cat && (
         <div className="tool-result">
           <div className="result-big">
-            <span className="result-number" style={{ color: category.color }}>
+            <span className="result-number" style={{ color: cat.color }}>
               {result}
             </span>
             <span className="result-unit">BMI</span>
@@ -169,45 +201,54 @@ function BMICalculator() {
             <div className="bmi-bar-track">
               <div
                 className="bmi-bar-fill"
-                style={{ left: `${barPct}%`, background: category.color }}
+                style={{ left: `${barPct}%`, background: cat.color }}
               />
-              <div className="bmi-zones">
-                <span style={{ color: "#3b82f6" }}>Underweight</span>
-                <span style={{ color: "#22c55e" }}>Normal</span>
-                <span style={{ color: "#f97316" }}>Overweight</span>
-                <span style={{ color: "#ef4444" }}>Obese</span>
-              </div>
+            </div>
+            <div className="bmi-zones">
+              <span style={{ color: "#3b82f6" }}>Underweight</span>
+              <span style={{ color: "#22c55e" }}>Normal</span>
+              <span style={{ color: "#f97316" }}>Overweight</span>
+              <span style={{ color: "#ef4444" }}>Obese</span>
             </div>
           </div>
           <div
             className="result-badge"
             style={{
-              background: category.color + "18",
-              borderColor: category.color + "40",
-              color: category.color,
+              background: cat.color + "18",
+              borderColor: cat.color + "40",
+              color: cat.color,
             }}
           >
-            {category.label}
+            {cat.label}
           </div>
-          <p className="result-tip">💡 {category.tip}</p>
+          <p className="result-tip">💡 {cat.tip}</p>
         </div>
       )}
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────
-   TOOL: Maintenance Calories (TDEE)
-───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════
+   TOOL 2 — TDEE / Maintenance Calories
+══════════════════════════════════════════════ */
 function TDEECalculator() {
+  const [unit, setUnit] = useState("metric");
   const [age, setAge] = useState("");
   const [sex, setSex] = useState("male");
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
+  const [kg, setKg] = useState("");
+  const [lbs, setLbs] = useState("");
+  const [cm, setCm] = useState("");
+  const [ft, setFt] = useState("");
+  const [inch, setInch] = useState("");
   const [activity, setActivity] = useState("1.55");
   const [result, setResult] = useState(null);
 
-  const activityLevels = [
+  const reset = (u) => {
+    setUnit(u);
+    setResult(null);
+  };
+
+  const levels = [
     { value: "1.2", label: "Sedentary", sub: "Desk job, little exercise" },
     { value: "1.375", label: "Lightly active", sub: "1–3 days/week" },
     { value: "1.55", label: "Moderately active", sub: "3–5 days/week" },
@@ -216,10 +257,10 @@ function TDEECalculator() {
   ];
 
   const calculate = () => {
-    const a = parseFloat(age),
-      w = parseFloat(weight),
-      h = parseFloat(height),
-      act = parseFloat(activity);
+    const a = parseFloat(age);
+    const w = unit === "metric" ? parseFloat(kg) : lbsToKg(parseFloat(lbs));
+    const h = unit === "metric" ? parseFloat(cm) : ftInToCm(ft, inch);
+    const act = parseFloat(activity);
     if (!a || !w || !h) return;
     const bmr =
       sex === "male"
@@ -239,14 +280,13 @@ function TDEECalculator() {
       <div className="tool-icon-row">
         <span className="tool-emoji">🔥</span>
         <div>
-          <h3 className="tool-title">Maintenance Calories</h3>
+          <h3 className="tool-title">Maintenance Calories (TDEE)</h3>
           <p className="tool-desc">
-            Your Total Daily Energy Expenditure (TDEE) — how many calories you
-            burn daily.
+            Total Daily Energy Expenditure — calories you burn daily.
           </p>
         </div>
       </div>
-
+      <UnitToggle unit={unit} onChange={reset} />
       <div className="tool-inputs">
         <div className="tool-field">
           <label>Age</label>
@@ -264,50 +304,45 @@ function TDEECalculator() {
             <option value="female">Female</option>
           </select>
         </div>
-        <div className="tool-field">
-          <label>Weight (kg)</label>
-          <input
-            type="number"
-            placeholder="e.g. 70"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          />
-        </div>
-        <div className="tool-field">
-          <label>Height (cm)</label>
-          <input
-            type="number"
-            placeholder="e.g. 170"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-          />
-        </div>
+        <WeightInput
+          unit={unit}
+          kg={kg}
+          setKg={setKg}
+          lbs={lbs}
+          setLbs={setLbs}
+        />
+        <HeightInput
+          unit={unit}
+          cm={cm}
+          setCm={setCm}
+          ft={ft}
+          setFt={setFt}
+          inch={inch}
+          setInch={setInch}
+        />
       </div>
-
       <div className="tool-field full-width">
         <label>Activity Level</label>
         <div className="activity-options">
-          {activityLevels.map((lvl) => (
+          {levels.map((l) => (
             <button
-              key={lvl.value}
-              className={`activity-btn ${activity === lvl.value ? "active" : ""}`}
-              onClick={() => setActivity(lvl.value)}
+              key={l.value}
+              className={`activity-btn ${activity === l.value ? "active" : ""}`}
+              onClick={() => setActivity(l.value)}
             >
-              <span className="act-label">{lvl.label}</span>
-              <span className="act-sub">{lvl.sub}</span>
+              <span className="act-label">{l.label}</span>
+              <span className="act-sub">{l.sub}</span>
             </button>
           ))}
         </div>
       </div>
-
       <button className="tool-btn" onClick={calculate}>
         Calculate TDEE
       </button>
-
       {result && (
         <div className="tool-result">
           <div className="tdee-grid">
-            <div className="tdee-cell main">
+            <div className="tdee-cell">
               <span className="result-number" style={{ color: "#111827" }}>
                 {result.tdee.toLocaleString()}
               </span>
@@ -316,14 +351,14 @@ function TDEECalculator() {
                 BMR: {result.bmr.toLocaleString()} kcal
               </span>
             </div>
-            <div className="tdee-cell loss">
+            <div className="tdee-cell">
               <span className="result-number" style={{ color: "#ef4444" }}>
                 {result.loss.toLocaleString()}
               </span>
               <span className="result-label">Weight Loss</span>
               <span className="result-sub">−500 kcal deficit</span>
             </div>
-            <div className="tdee-cell gain">
+            <div className="tdee-cell">
               <span className="result-number" style={{ color: "#22c55e" }}>
                 {result.gain.toLocaleString()}
               </span>
@@ -332,8 +367,8 @@ function TDEECalculator() {
             </div>
           </div>
           <p className="result-tip">
-            💡 These are estimates using the Mifflin–St Jeor equation. Adjust
-            based on real-world results over 2–3 weeks.
+            💡 Based on Mifflin–St Jeor. Adjust based on real-world results over
+            2–3 weeks.
           </p>
         </div>
       )}
@@ -341,26 +376,34 @@ function TDEECalculator() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   TOOL: Macro Calculator
-───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════
+   TOOL 3 — Macro Calculator
+══════════════════════════════════════════════ */
 function MacroCalculator() {
+  const [unit, setUnit] = useState("metric");
   const [calories, setCalories] = useState("");
   const [goal, setGoal] = useState("maintain");
+  const [kg, setKg] = useState("");
+  const [lbs, setLbs] = useState("");
   const [result, setResult] = useState(null);
 
+  const reset = (u) => {
+    setUnit(u);
+    setResult(null);
+  };
+
   const goals = [
-    { value: "lose", label: "Lose Fat", protein: 0.4, carbs: 0.3, fat: 0.3 },
+    { value: "lose", label: "🔻 Lose Fat", protein: 0.4, carbs: 0.3, fat: 0.3 },
     {
       value: "maintain",
-      label: "Maintain",
+      label: "⚖️ Maintain",
       protein: 0.3,
       carbs: 0.4,
       fat: 0.3,
     },
     {
       value: "gain",
-      label: "Build Muscle",
+      label: "💪 Build Muscle",
       protein: 0.35,
       carbs: 0.45,
       fat: 0.2,
@@ -370,9 +413,11 @@ function MacroCalculator() {
   const calculate = () => {
     const kcal = parseFloat(calories);
     if (!kcal) return;
-    const g = goals.find((g) => g.value === goal);
+    const g = goals.find((x) => x.value === goal);
+    const w = unit === "metric" ? parseFloat(kg) : lbsToKg(parseFloat(lbs));
+    const proteinG = Math.round((kcal * g.protein) / 4);
     setResult({
-      protein: Math.round((kcal * g.protein) / 4),
+      protein: proteinG,
       carbs: Math.round((kcal * g.carbs) / 4),
       fat: Math.round((kcal * g.fat) / 9),
       pct: {
@@ -380,6 +425,7 @@ function MacroCalculator() {
         carbs: Math.round(g.carbs * 100),
         fat: Math.round(g.fat * 100),
       },
+      perKg: w ? +(proteinG / w).toFixed(1) : null,
     });
   };
 
@@ -394,8 +440,8 @@ function MacroCalculator() {
           </p>
         </div>
       </div>
-
-      <div className="unit-toggle">
+      <UnitToggle unit={unit} onChange={reset} />
+      <div className="unit-toggle" style={{ marginTop: 0 }}>
         {goals.map((g) => (
           <button
             key={g.value}
@@ -409,23 +455,31 @@ function MacroCalculator() {
           </button>
         ))}
       </div>
-
       <div className="tool-inputs">
         <div className="tool-field full-width">
-          <label>Daily Calories (kcal) — use TDEE tool above</label>
+          <label>Daily Calories (kcal)</label>
           <input
             type="number"
-            placeholder="e.g. 2200"
+            placeholder="e.g. 2200 — use TDEE tool above"
             value={calories}
             onChange={(e) => setCalories(e.target.value)}
           />
         </div>
+        <WeightInput
+          unit={unit}
+          kg={kg}
+          setKg={setKg}
+          lbs={lbs}
+          setLbs={setLbs}
+        />
+        <div className="tool-field">
+          <label>Optional — for protein per kg/lb output</label>
+          <div className="field-note">Adds reference ratio to results</div>
+        </div>
       </div>
-
       <button className="tool-btn" onClick={calculate}>
         Calculate Macros
       </button>
-
       {result && (
         <div className="tool-result">
           <div className="macro-grid">
@@ -434,7 +488,12 @@ function MacroCalculator() {
                 {result.protein}g
               </span>
               <span className="macro-label">Protein</span>
-              <span className="macro-pct">{result.pct.protein}%</span>
+              <span className="macro-pct">
+                {result.pct.protein}%
+                {result.perKg
+                  ? ` · ${result.perKg}g/${unit === "metric" ? "kg" : "lb"}`
+                  : ""}
+              </span>
               <div className="macro-bar" style={{ background: "#ef444430" }}>
                 <div
                   className="macro-bar-inner"
@@ -484,36 +543,40 @@ function MacroCalculator() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   TOOL: Ideal Body Weight
-───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════
+   TOOL 4 — Ideal Body Weight
+══════════════════════════════════════════════ */
 function IdealWeightCalculator() {
-  const [height, setHeight] = useState("");
+  const [unit, setUnit] = useState("metric");
+  const [cm, setCm] = useState("");
+  const [ft, setFt] = useState("");
+  const [inch, setInch] = useState("");
   const [sex, setSex] = useState("male");
   const [result, setResult] = useState(null);
 
+  const reset = (u) => {
+    setUnit(u);
+    setResult(null);
+  };
+
+  const fmt = (kg, u) =>
+    u === "metric" ? `${+kg.toFixed(1)} kg` : `${kgToLbs(kg)} lbs`;
+
   const calculate = () => {
-    const h = parseFloat(height);
+    const h = unit === "metric" ? parseFloat(cm) : ftInToCm(ft, inch);
     if (!h || h < 100) return;
-    const inchesOver5ft = h / 2.54 - 60;
-    // Devine formula
-    const devine =
-      sex === "male" ? 50 + 2.3 * inchesOver5ft : 45.5 + 2.3 * inchesOver5ft;
-    // Miller formula
+    const over5ft = h / 2.54 - 60;
+    const devine = sex === "male" ? 50 + 2.3 * over5ft : 45.5 + 2.3 * over5ft;
     const miller =
-      sex === "male"
-        ? 56.2 + 1.41 * inchesOver5ft
-        : 53.1 + 1.36 * inchesOver5ft;
-    // Robinson formula
-    const robinson =
-      sex === "male" ? 52 + 1.9 * inchesOver5ft : 49 + 1.7 * inchesOver5ft;
+      sex === "male" ? 56.2 + 1.41 * over5ft : 53.1 + 1.36 * over5ft;
+    const robinson = sex === "male" ? 52 + 1.9 * over5ft : 49 + 1.7 * over5ft;
     const avg = (devine + miller + robinson) / 3;
     setResult({
-      devine: Math.round(devine * 10) / 10,
-      miller: Math.round(miller * 10) / 10,
-      robinson: Math.round(robinson * 10) / 10,
-      avg: Math.round(avg * 10) / 10,
-      range: [Math.round((avg - 5) * 10) / 10, Math.round((avg + 5) * 10) / 10],
+      devine: fmt(devine, unit),
+      miller: fmt(miller, unit),
+      robinson: fmt(robinson, unit),
+      low: fmt(avg - 5, unit),
+      high: fmt(avg + 5, unit),
     });
   };
 
@@ -524,22 +587,21 @@ function IdealWeightCalculator() {
         <div>
           <h3 className="tool-title">Ideal Body Weight</h3>
           <p className="tool-desc">
-            Estimate a healthy target weight range based on height using three
-            medical formulas.
+            Estimate a healthy target weight using three medical formulas.
           </p>
         </div>
       </div>
-
+      <UnitToggle unit={unit} onChange={reset} />
       <div className="tool-inputs">
-        <div className="tool-field">
-          <label>Height (cm)</label>
-          <input
-            type="number"
-            placeholder="e.g. 170"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-          />
-        </div>
+        <HeightInput
+          unit={unit}
+          cm={cm}
+          setCm={setCm}
+          ft={ft}
+          setFt={setFt}
+          inch={inch}
+          setInch={setInch}
+        />
         <div className="tool-field">
           <label>Sex</label>
           <select value={sex} onChange={(e) => setSex(e.target.value)}>
@@ -548,37 +610,34 @@ function IdealWeightCalculator() {
           </select>
         </div>
       </div>
-
       <button className="tool-btn" onClick={calculate}>
         Calculate Ideal Weight
       </button>
-
       {result && (
         <div className="tool-result">
           <div className="ibw-range">
             <span className="ibw-label">Healthy Weight Range</span>
             <span className="ibw-numbers">
-              {result.range[0]} – {result.range[1]}{" "}
-              <span className="ibw-unit">kg</span>
+              {result.low} – {result.high}
             </span>
           </div>
           <div className="ibw-formulas">
             <div className="ibw-row">
-              <span>Devine</span>
-              <strong>{result.devine} kg</strong>
+              <span>Devine formula</span>
+              <strong>{result.devine}</strong>
             </div>
             <div className="ibw-row">
-              <span>Miller</span>
-              <strong>{result.miller} kg</strong>
+              <span>Miller formula</span>
+              <strong>{result.miller}</strong>
             </div>
             <div className="ibw-row">
-              <span>Robinson</span>
-              <strong>{result.robinson} kg</strong>
+              <span>Robinson formula</span>
+              <strong>{result.robinson}</strong>
             </div>
           </div>
           <p className="result-tip">
-            💡 These are reference points, not strict targets. Muscle mass, bone
-            density, and body composition all matter.
+            💡 These are reference points, not strict targets. Muscle mass and
+            body composition also matter.
           </p>
         </div>
       )}
@@ -586,28 +645,38 @@ function IdealWeightCalculator() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   TOOL: Daily Water Intake
-───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════
+   TOOL 5 — Daily Water Intake
+══════════════════════════════════════════════ */
 function WaterCalculator() {
-  const [weight, setWeight] = useState("");
+  const [unit, setUnit] = useState("metric");
+  const [kg, setKg] = useState("");
+  const [lbs, setLbs] = useState("");
   const [activity, setActivity] = useState("moderate");
   const [climate, setClimate] = useState("temperate");
   const [result, setResult] = useState(null);
 
+  const reset = (u) => {
+    setUnit(u);
+    setResult(null);
+  };
+
   const calculate = () => {
-    const w = parseFloat(weight);
+    const w = unit === "metric" ? parseFloat(kg) : lbsToKg(parseFloat(lbs));
     if (!w) return;
-    // Base: 35 ml/kg
     let base = w * 35;
-    if (activity === "light") base *= 1.0;
     if (activity === "moderate") base *= 1.15;
     if (activity === "intense") base *= 1.3;
     if (climate === "hot") base *= 1.15;
     if (climate === "cold") base *= 0.95;
-    const litres = Math.round((base / 1000) * 10) / 10;
-    const glasses = Math.round(litres / 0.25);
-    setResult({ litres, glasses, ml: Math.round(base) });
+    const ml = Math.round(base);
+    setResult({
+      litres: +(ml / 1000).toFixed(1),
+      ml,
+      flOz: Math.round(ml * 0.033814),
+      cups: Math.round(ml / 237),
+      glasses: Math.round(ml / 250),
+    });
   };
 
   return (
@@ -621,24 +690,22 @@ function WaterCalculator() {
           </p>
         </div>
       </div>
-
+      <UnitToggle unit={unit} onChange={reset} />
       <div className="tool-inputs">
-        <div className="tool-field">
-          <label>Weight (kg)</label>
-          <input
-            type="number"
-            placeholder="e.g. 70"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          />
-        </div>
+        <WeightInput
+          unit={unit}
+          kg={kg}
+          setKg={setKg}
+          lbs={lbs}
+          setLbs={setLbs}
+        />
         <div className="tool-field">
           <label>Activity Level</label>
           <select
             value={activity}
             onChange={(e) => setActivity(e.target.value)}
           >
-            <option value="light">Light (desk job, little exercise)</option>
+            <option value="light">Light (desk job)</option>
             <option value="moderate">Moderate (3–5 days/week)</option>
             <option value="intense">Intense (daily training)</option>
           </select>
@@ -652,11 +719,9 @@ function WaterCalculator() {
           </select>
         </div>
       </div>
-
       <button className="tool-btn" onClick={calculate}>
         Calculate Water Needs
       </button>
-
       {result && (
         <div className="tool-result">
           <div className="water-display">
@@ -670,23 +735,44 @@ function WaterCalculator() {
               <span className="water-litres">{result.litres}L</span>
             </div>
             <div className="water-stats">
-              <div className="water-stat">
-                <span className="water-num">{result.litres}</span>
-                <span className="water-label">Litres / day</span>
-              </div>
-              <div className="water-stat">
-                <span className="water-num">{result.ml.toLocaleString()}</span>
-                <span className="water-label">ml / day</span>
-              </div>
-              <div className="water-stat">
-                <span className="water-num">{result.glasses}</span>
-                <span className="water-label">250ml glasses</span>
-              </div>
+              {unit === "metric" ? (
+                <>
+                  <div className="water-stat">
+                    <span className="water-num">{result.litres}</span>
+                    <span className="water-label">Litres / day</span>
+                  </div>
+                  <div className="water-stat">
+                    <span className="water-num">
+                      {result.ml.toLocaleString()}
+                    </span>
+                    <span className="water-label">ml / day</span>
+                  </div>
+                  <div className="water-stat">
+                    <span className="water-num">{result.glasses}</span>
+                    <span className="water-label">250ml glasses</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="water-stat">
+                    <span className="water-num">{result.flOz}</span>
+                    <span className="water-label">fl oz / day</span>
+                  </div>
+                  <div className="water-stat">
+                    <span className="water-num">{result.cups}</span>
+                    <span className="water-label">cups / day</span>
+                  </div>
+                  <div className="water-stat">
+                    <span className="water-num">{result.glasses}</span>
+                    <span className="water-label">8oz glasses</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <p className="result-tip">
-            💡 Sip steadily throughout the day. Don't wait until you're thirsty
-            — by then you're already mildly dehydrated.
+            💡 Sip steadily throughout the day. Don't wait until thirsty —
+            that's already mild dehydration.
           </p>
         </div>
       )}
@@ -694,16 +780,22 @@ function WaterCalculator() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   TOOL: Calorie Burn Estimator
-───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════
+   TOOL 6 — Calorie Burn Estimator
+══════════════════════════════════════════════ */
 function CalorieBurnCalculator() {
-  const [weight, setWeight] = useState("");
+  const [unit, setUnit] = useState("metric");
+  const [kg, setKg] = useState("");
+  const [lbs, setLbs] = useState("");
   const [duration, setDuration] = useState("");
   const [activity, setActivity] = useState("walking");
   const [result, setResult] = useState(null);
 
-  // MET values
+  const reset = (u) => {
+    setUnit(u);
+    setResult(null);
+  };
+
   const activities = [
     { value: "walking", label: "🚶 Walking (moderate)", met: 3.5 },
     { value: "running", label: "🏃 Running (moderate)", met: 8.0 },
@@ -716,13 +808,15 @@ function CalorieBurnCalculator() {
   ];
 
   const calculate = () => {
-    const w = parseFloat(weight);
+    const w = unit === "metric" ? parseFloat(kg) : lbsToKg(parseFloat(lbs));
     const d = parseFloat(duration);
     if (!w || !d) return;
     const act = activities.find((a) => a.value === activity);
-    // Calories = MET × weight (kg) × duration (hrs)
-    const kcal = Math.round(act.met * w * (d / 60));
-    setResult({ kcal, activity: act.label, met: act.met });
+    setResult({
+      kcal: Math.round(act.met * w * (d / 60)),
+      met: act.met,
+      label: act.label,
+    });
   };
 
   return (
@@ -736,17 +830,15 @@ function CalorieBurnCalculator() {
           </p>
         </div>
       </div>
-
+      <UnitToggle unit={unit} onChange={reset} />
       <div className="tool-inputs">
-        <div className="tool-field">
-          <label>Weight (kg)</label>
-          <input
-            type="number"
-            placeholder="e.g. 70"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          />
-        </div>
+        <WeightInput
+          unit={unit}
+          kg={kg}
+          setKg={setKg}
+          lbs={lbs}
+          setLbs={setLbs}
+        />
         <div className="tool-field">
           <label>Duration (minutes)</label>
           <input
@@ -771,11 +863,9 @@ function CalorieBurnCalculator() {
           </div>
         </div>
       </div>
-
       <button className="tool-btn" onClick={calculate}>
         Estimate Calories Burned
       </button>
-
       {result && (
         <div className="tool-result">
           <div className="burn-display">
@@ -783,8 +873,8 @@ function CalorieBurnCalculator() {
             <span className="burn-unit">kcal burned</span>
           </div>
           <p className="result-tip">
-            💡 MET (Metabolic Equivalent of Task) = {result.met}. This is an
-            estimate — actual burn varies with fitness level and intensity.
+            💡 MET = {result.met} for {result.label}. Actual burn varies with
+            fitness level and intensity.
           </p>
         </div>
       )}
@@ -792,15 +882,216 @@ function CalorieBurnCalculator() {
   );
 }
 
-/* ─────────────────────────────────────────────
+/* ══════════════════════════════════════════════
+   TOOL 7 — Body Fat % (Navy Method)
+══════════════════════════════════════════════ */
+function BodyFatCalculator() {
+  const [unit, setUnit] = useState("metric");
+  const [sex, setSex] = useState("male");
+  const [kg, setKg] = useState("");
+  const [lbs, setLbs] = useState("");
+  const [cm, setCm] = useState("");
+  const [ft, setFt] = useState("");
+  const [inch, setInch] = useState("");
+  const [waist, setWaist] = useState("");
+  const [neck, setNeck] = useState("");
+  const [hip, setHip] = useState("");
+  const [result, setResult] = useState(null);
+
+  const reset = (u) => {
+    setUnit(u);
+    setResult(null);
+  };
+  const toUnit = (v) =>
+    unit === "metric" ? parseFloat(v) : parseFloat(v) * 2.54;
+  const ml = unit === "metric" ? "cm" : "in";
+  const ph =
+    unit === "metric"
+      ? { waist: "e.g. 85", neck: "e.g. 38", hip: "e.g. 95" }
+      : { waist: "e.g. 33", neck: "e.g. 15", hip: "e.g. 37" };
+
+  const getCategory = (bf, s) => {
+    if (s === "male") {
+      if (bf < 6) return { label: "Essential Fat", color: "#3b82f6" };
+      if (bf < 14) return { label: "Athletic", color: "#22c55e" };
+      if (bf < 18) return { label: "Fitness", color: "#4ade80" };
+      if (bf < 25) return { label: "Average", color: "#fbbf24" };
+      return { label: "Obese", color: "#ef4444" };
+    } else {
+      if (bf < 14) return { label: "Essential Fat", color: "#3b82f6" };
+      if (bf < 21) return { label: "Athletic", color: "#22c55e" };
+      if (bf < 25) return { label: "Fitness", color: "#4ade80" };
+      if (bf < 32) return { label: "Average", color: "#fbbf24" };
+      return { label: "Obese", color: "#ef4444" };
+    }
+  };
+
+  const calculate = () => {
+    const h = unit === "metric" ? parseFloat(cm) : ftInToCm(ft, inch);
+    const w_cm = toUnit(waist),
+      n_cm = toUnit(neck),
+      h_cm = sex === "female" ? toUnit(hip) : null;
+    if (!h || !w_cm || !n_cm) return;
+    if (sex === "female" && !h_cm) return;
+    let bf;
+    if (sex === "male") {
+      bf =
+        495 /
+          (1.0324 -
+            0.19077 * Math.log10(w_cm - n_cm) +
+            0.15456 * Math.log10(h)) -
+        450;
+    } else {
+      bf =
+        495 /
+          (1.29579 -
+            0.35004 * Math.log10(w_cm + h_cm - n_cm) +
+            0.221 * Math.log10(h)) -
+        450;
+    }
+    const wKg = unit === "metric" ? parseFloat(kg) : lbsToKg(parseFloat(lbs));
+    const fatKg = wKg ? +((wKg * bf) / 100).toFixed(1) : null;
+    const leanKg = fatKg ? +(wKg - fatKg).toFixed(1) : null;
+    setResult({ bf: +bf.toFixed(1), fatKg, leanKg, wKg });
+  };
+
+  const cat = result ? getCategory(result.bf, sex) : null;
+  const fmtW = (kg) => (unit === "metric" ? `${kg} kg` : `${kgToLbs(kg)} lbs`);
+
+  return (
+    <div className="tool-card">
+      <div className="tool-icon-row">
+        <span className="tool-emoji">📏</span>
+        <div>
+          <h3 className="tool-title">Body Fat % Estimator</h3>
+          <p className="tool-desc">
+            US Navy tape-measure method — no body fat scale needed.
+          </p>
+        </div>
+      </div>
+      <UnitToggle unit={unit} onChange={reset} />
+      <div className="tool-inputs">
+        <div className="tool-field">
+          <label>Sex</label>
+          <select
+            value={sex}
+            onChange={(e) => {
+              setSex(e.target.value);
+              setResult(null);
+            }}
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <HeightInput
+          unit={unit}
+          cm={cm}
+          setCm={setCm}
+          ft={ft}
+          setFt={setFt}
+          inch={inch}
+          setInch={setInch}
+        />
+        <div className="tool-field">
+          <label>Waist ({ml}) — at navel</label>
+          <input
+            type="number"
+            placeholder={ph.waist}
+            value={waist}
+            onChange={(e) => setWaist(e.target.value)}
+          />
+        </div>
+        <div className="tool-field">
+          <label>Neck ({ml})</label>
+          <input
+            type="number"
+            placeholder={ph.neck}
+            value={neck}
+            onChange={(e) => setNeck(e.target.value)}
+          />
+        </div>
+        {sex === "female" && (
+          <div className="tool-field full-width">
+            <label>Hips ({ml}) — widest point</label>
+            <input
+              type="number"
+              placeholder={ph.hip}
+              value={hip}
+              onChange={(e) => setHip(e.target.value)}
+            />
+          </div>
+        )}
+        <div className="tool-field full-width">
+          <label>Weight (optional — adds fat/lean breakdown)</label>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0.5rem",
+            }}
+          >
+            <WeightInput
+              unit={unit}
+              kg={kg}
+              setKg={setKg}
+              lbs={lbs}
+              setLbs={setLbs}
+            />
+          </div>
+        </div>
+      </div>
+      <button className="tool-btn" onClick={calculate}>
+        Estimate Body Fat %
+      </button>
+      {result && cat && (
+        <div className="tool-result">
+          <div className="result-big">
+            <span className="result-number" style={{ color: cat.color }}>
+              {result.bf}%
+            </span>
+            <span className="result-unit">Body Fat</span>
+          </div>
+          <div
+            className="result-badge"
+            style={{
+              background: cat.color + "18",
+              borderColor: cat.color + "40",
+              color: cat.color,
+            }}
+          >
+            {cat.label}
+          </div>
+          {result.fatKg && (
+            <div className="ibw-formulas" style={{ marginTop: "0.75rem" }}>
+              <div className="ibw-row">
+                <span>Fat Mass</span>
+                <strong>{fmtW(result.fatKg)}</strong>
+              </div>
+              <div className="ibw-row">
+                <span>Lean Mass</span>
+                <strong>{fmtW(result.leanKg)}</strong>
+              </div>
+            </div>
+          )}
+          <p className="result-tip">
+            💡 Measure in the morning, relaxed, for most consistency.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
    MAIN PAGE
-───────────────────────────────────────────── */
+══════════════════════════════════════════════ */
 function Tools() {
   const [activeTab, setActiveTab] = useState("all");
 
   const tabs = [
     { id: "all", label: "All Tools" },
-    { id: "body", label: "Body" },
+    { id: "body", label: "Body Metrics" },
     { id: "food", label: "Nutrition" },
     { id: "fitness", label: "Fitness" },
   ];
@@ -812,6 +1103,7 @@ function Tools() {
     { id: "ibw", tab: "body", component: <IdealWeightCalculator /> },
     { id: "water", tab: "food", component: <WaterCalculator /> },
     { id: "burn", tab: "fitness", component: <CalorieBurnCalculator /> },
+    { id: "bodyfat", tab: "body", component: <BodyFatCalculator /> },
   ];
 
   const visible = toolMeta.filter(
@@ -822,19 +1114,17 @@ function Tools() {
     <div className="page">
       <Navbar />
       <main>
-        {/* ── HERO ── */}
         <section className="tools-hero">
           <div className="container">
             <p className="eyebrow">Free calculators</p>
             <h1>Nutrition &amp; Fitness Tools</h1>
             <p className="lead">
-              Six science-backed calculators to track your body stats, dial in
-              your calories, and plan your nutrition — all in one place.
+              Seven science-backed calculators — every one supports metric and
+              imperial. No switching apps.
             </p>
           </div>
         </section>
 
-        {/* ── TABS ── */}
         <div className="tools-tabs-bar">
           <div className="container">
             <div className="tools-tabs">
@@ -851,7 +1141,6 @@ function Tools() {
           </div>
         </div>
 
-        {/* ── TOOLS GRID ── */}
         <section className="section alt">
           <div className="container">
             <div className="tools-grid">
