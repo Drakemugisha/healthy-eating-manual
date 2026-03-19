@@ -4,6 +4,7 @@ import "../styles/Home.css";
 // import logo from "../assets/4E18AC29-0D3C-49D2-A919-15327DE4EFA5.png";
 import Navbar from "../components/nav.jsx";
 import Footer from "../components/footer.jsx";
+import NewsletterSignup from "../components/NewsletterSignup.jsx";
 
 /* ── Scroll-reveal hook ── */
 function useReveal() {
@@ -798,18 +799,7 @@ function Home() {
                 className="final-cta-right reveal"
                 style={{ transitionDelay: "0.15s" }}
               >
-                <a
-                  href="https://healthyeatingmanual.site/healthy_eating_manual.html"
-                  className="btn btn-primary btn-final"
-                >
-                  Get Instant Access Now
-                </a>
-                <p
-                  className="small-note"
-                  style={{ marginTop: "1rem", color: "#9ca3af" }}
-                >
-                  One decision. Compounding benefits.
-                </p>
+                <NewsletterSignup />
                 <div className="trust-badges">
                   <span>📱 Works on any device</span>
                   <span>🔒 Instant access</span>
