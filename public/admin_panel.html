@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Send Weekly Tip</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage:        #5C7A5A;
+    --sage-light:  #8AAB87;
+    --sage-pale:   #D4E4D2;
+    --sage-bg:     #EAF3E8;
+    --gold:        #C8963C;
+    --gold-light:  #F0C97A;
+    --cream:       #F7F3EC;
+    --warm-white:  #FDFAF5;
+    --ink:         #1A1A1A;
+    --charcoal:    #2C2C2C;
+    --muted:       #888;
+    --border:      #E2DDD6;
+    --terra:       #C4623A;
+    --red-bg:      #FAEAE3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--charcoal);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .topbar-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--warm-white);
+  }
+  .topbar-logo em { font-style: italic; font-weight: 300; color: var(--gold-light); }
+  .topbar-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.45);
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 100px;
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .preview-col { order: -1; }
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--warm-white);
+    border-radius: 20px;
+    padding: 36px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px; font-weight: 700;
+    margin-bottom: 6px; color: var(--ink);
+  }
+  .card-sub {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 28px; line-height: 1.5;
+  }
+
+  /* ── FORM FIELDS ── */
+  .field { margin-bottom: 22px; }
+
+  label {
+    display: block;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 7px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: vertical;
+  }
+
+  input:focus, textarea:focus {
+    border-color: var(--sage);
+    box-shadow: 0 0 0 3px rgba(92,122,90,0.12);
+  }
+
+  textarea { min-height: 90px; }
+
+  /* ── POINTS ── */
+  .points-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+
+  .point-row {
+    display: flex; gap: 10px; align-items: center;
+  }
+
+  .point-row input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .point-row input:focus { border-color: var(--sage); }
+
+  .point-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--sage-pale); color: var(--sage);
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .remove-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--red-bg); color: var(--terra);
+    border: none; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.2s;
+  }
+  .remove-btn:hover { background: #f5d0c3; }
+
+  .add-point-btn {
+    background: none; border: 1.5px dashed var(--sage-light);
+    color: var(--sage); width: 100%; padding: 10px;
+    border-radius: 10px; font-size: 13px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .add-point-btn:hover { background: var(--sage-bg); }
+
+  /* ── SEND BUTTON ── */
+  .send-btn {
+    width: 100%; padding: 16px;
+    background: var(--sage); color: white;
+    border: none; border-radius: 14px;
+    font-size: 15px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+    margin-top: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .send-btn:hover:not(:disabled) { background: #4a6648; transform: translateY(-1px); }
+  .send-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* ── TOAST ── */
+  .toast {
+    border-radius: 12px; padding: 14px 18px;
+    font-size: 13px; line-height: 1.6;
+    margin-top: 16px; display: none;
+  }
+  .toast.show { display: block; animation: fadeUp 0.3s ease; }
+  .toast.success { background: var(--sage-bg); color: var(--sage); border-left: 3px solid var(--sage); }
+  .toast.error   { background: var(--red-bg);  color: var(--terra); border-left: 3px solid var(--terra); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PREVIEW COLUMN ── */
+  .preview-col .card-title { margin-bottom: 4px; }
+
+  .email-preview {
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 12px;
+    margin-top: 16px;
+  }
+
+  .ep-header {
+    background: var(--sage);
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .ep-badge {
+    display: inline-block;
+    background: rgba(240,201,122,0.2);
+    border: 1px solid rgba(240,201,122,0.35);
+    color: var(--gold-light);
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 10px;
+  }
+  .ep-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--warm-white); line-height: 1.15;
+    margin-bottom: 4px; word-break: break-word;
+  }
+  .ep-sub {
+    font-size: 11px; font-weight: 300;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .ep-body { padding: 20px; background: var(--warm-white); }
+
+  .ep-greeting {
+    font-family: 'Fraunces', serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--ink); margin-bottom: 8px;
+  }
+  .ep-intro {
+    font-size: 12px; font-weight: 300; line-height: 1.7;
+    color: #555; margin-bottom: 16px;
+  }
+  .ep-section-label {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage-light); margin-bottom: 10px;
+  }
+
+  .ep-point {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .ep-dot {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: var(--sage-pale); color: var(--sage);
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .ep-point-text { font-size: 12px; line-height: 1.6; color: #444; }
+
+  .ep-cta {
+    background: var(--sage-bg);
+    border-radius: 10px; padding: 14px 16px;
+    text-align: center; margin: 16px 0;
+  }
+  .ep-cta p { font-size: 11px; color: #555; margin-bottom: 8px; line-height: 1.5; }
+  .ep-cta-btn {
+    display: inline-block;
+    background: var(--sage); color: white;
+    font-size: 11px; font-weight: 500;
+    padding: 8px 16px; border-radius: 7px;
+    text-decoration: none;
+  }
+
+  .ep-quote {
+    font-family: 'Fraunces', serif;
+    font-size: 12px; font-style: italic; font-weight: 300;
+    color: var(--sage); line-height: 1.5;
+    border-left: 2px solid var(--sage-light);
+    padding-left: 12px; margin: 14px 0;
+  }
+
+  .ep-footer {
+    background: var(--charcoal);
+    padding: 16px 20px; text-align: center;
+  }
+  .ep-footer-logo {
+    font-family: 'Fraunces', serif; font-size: 13px;
+    font-weight: 700; color: var(--warm-white); margin-bottom: 6px;
+  }
+  .ep-footer-unsub {
+    font-size: 10px; color: rgba(255,255,255,0.3); line-height: 1.5;
+  }
+
+  /* ── STATS BOX ── */
+  .stats-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 22px;
+  }
+  .stat-box {
+    background: var(--cream); border-radius: 12px;
+    padding: 16px; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px; font-weight: 800; color: var(--sage);
+    line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  #subCount { color: var(--sage); }
+  #failCount { color: var(--terra); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-logo">🌿 Healthy <em>Eating</em> Manual</span>
+  <span class="topbar-pill">Admin Panel</span>
+</div>
+
+<div class="layout">
+
+  <!-- ── LEFT: COMPOSE ── -->
+  <div>
+    <div class="card">
+      <h2 class="card-title">Send Weekly Tip</h2>
+      <p class="card-sub">Write a title, intro, and key points — they'll be sent to every subscriber using the branded email template.</p>
+
+      <!-- Secret -->
+      <div class="field">
+        <label>Admin Secret</label>
+        <input type="password" id="secret" placeholder="Enter your admin secret key"/>
+      </div>
+
+      <!-- Lambda URL -->
+      <div class="field">
+        <label>API Gateway URL</label>
+        <input type="text" id="lambdaUrl" placeholder="https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod/broadcast"/>
+      </div>
+
+      <!-- Title -->
+      <div class="field">
+        <label>Tip Title</label>
+        <input type="text" id="tipTitle" placeholder="e.g. The Power of Protein" oninput="updatePreview()"/>
+      </div>
+
+      <!-- Intro -->
+      <div class="field">
+        <label>Intro Paragraph</label>
+        <textarea id="tipIntro" placeholder="Write a short intro explaining this week's tip…" oninput="updatePreview()"></textarea>
+      </div>
+
+      <!-- Points -->
+      <div class="field">
+        <label>Key Points</label>
+        <div class="points-list" id="pointsList"></div>
+        <button class="add-point-btn" onclick="addPoint()">+ Add another point</button>
+      </div>
+
+      <button class="send-btn" id="sendBtn" onclick="sendBroadcast()">
+        <span id="sendBtnIcon">🌿</span>
+        <span id="sendBtnText">Send to All Subscribers</span>
+      </button>
+
+      <div class="toast" id="toast"></div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: PREVIEW + RESULTS ── -->
+  <div class="preview-col">
+
+    <!-- Results (hidden until send) -->
+    <div class="card" id="resultsCard" style="display:none; margin-bottom:20px;">
+      <h2 class="card-title">Send Results</h2>
+      <p class="card-sub" id="resultsTime"></p>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num" id="subCount">—</div>
+          <div class="stat-label">Emails Sent</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="failCount">—</div>
+          <div class="stat-label">Failed</div>
+        </div>
+      </div>
+      <div id="failedList" style="display:none;">
+        <p style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--terra);margin-bottom:8px;">Failed Addresses</p>
+        <div id="failedItems" style="font-size:12px;color:#666;line-height:2;"></div>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="card">
+      <h2 class="card-title">Live Preview</h2>
+      <p class="card-sub">Updates as you type.</p>
+
+      <div class="email-preview">
+        <div class="ep-header">
+          <div class="ep-badge">Tip of the Week</div>
+          <div class="ep-title" id="prevTitle">Your Tip Title Will Appear Here</div>
+          <div class="ep-sub">Your weekly guide to eating well, simply.</div>
+        </div>
+        <div class="ep-body">
+          <div class="ep-greeting">Hi [Subscriber Name],</div>
+          <div class="ep-intro" id="prevIntro">Your intro paragraph will appear here once you start typing above.</div>
+          <div class="ep-section-label">This week's key points</div>
+          <div id="prevPoints">
+            <div class="ep-point">
+              <div class="ep-dot">✦</div>
+              <div class="ep-point-text" style="color:#bbb;font-style:italic;">Your points will appear here…</div>
+            </div>
+          </div>
+          <div class="ep-cta">
+            <p>Want to go deeper? The full manual covers everything from macros to step-by-step meal planning.</p>
+            <span class="ep-cta-btn">Read the Manual →</span>
+          </div>
+          <div class="ep-quote">"Whether your goal is to lose, maintain, or gain — the foundation is always the same: whole foods, adequate protein, and consistency."</div>
+        </div>
+        <div class="ep-footer">
+          <div class="ep-footer-logo">🌿 Healthy Eating Manual</div>
+          <div class="ep-footer-unsub">You're receiving this because you subscribed at healthyeatingmanual.site.<br>Reply "unsubscribe" to opt out.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── POINTS MANAGEMENT ─────────────────────────────────────────────────────
+  let points = ["", "", ""];
+
+  function renderPoints() {
+    const list = document.getElementById('pointsList');
+    list.innerHTML = points.map((val, i) => `
+      <div class="point-row">
+        <div class="point-num">${i + 1}</div>
+        <input
+          type="text"
+          value="${escHtml(val)}"
+          placeholder="e.g. Aim for 1.6g protein per kg of bodyweight"
+          oninput="points[${i}] = this.value; updatePreview()"
+        />
+        ${points.length > 1
+          ? `<button class="remove-btn" onclick="removePoint(${i})" title="Remove">×</button>`
+          : ''}
+      </div>
+    `).join('');
+  }
+
+  function addPoint() {
+    points.push("");
+    renderPoints();
+    // Focus new input
+    const inputs = document.querySelectorAll('#pointsList input');
+    inputs[inputs.length - 1].focus();
+  }
+
+  function removePoint(i) {
+    points.splice(i, 1);
+    renderPoints();
+    updatePreview();
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── LIVE PREVIEW ──────────────────────────────────────────────────────────
+  function updatePreview() {
+    const title = document.getElementById('tipTitle').value.trim();
+    const intro = document.getElementById('tipIntro').value.trim();
+
+    document.getElementById('prevTitle').textContent = title || 'Your Tip Title Will Appear Here';
+    document.getElementById('prevIntro').textContent = intro || 'Your intro paragraph will appear here once you start typing above.';
+
+    const filled = points.filter(p => p.trim());
+    const container = document.getElementById('prevPoints');
+
+    if (filled.length === 0) {
+      container.innerHTML = `
+        <div class="ep-point">
+          <div class="ep-dot">✦</div>
+          <div class="ep-point-text" style="color:#bbb;font-style:italic;">Your points will appear here…</div>
+        </div>`;
+    } else {
+      container.innerHTML = filled.map(p => `
+        <div class="ep-point">
+          <div class="ep-dot">✦</div>
+          <div class="ep-point-text">${escHtml(p)}</div>
+        </div>`).join('');
+    }
+  }
+
+  // ── SEND BROADCAST ────────────────────────────────────────────────────────
+  async function sendBroadcast() {
+    const secret    = document.getElementById('secret').value.trim();
+    const lambdaUrl = document.getElementById('lambdaUrl').value.trim();
+    const title     = document.getElementById('tipTitle').value.trim();
+    const intro     = document.getElementById('tipIntro').value.trim();
+    const filledPoints = points.filter(p => p.trim());
+
+    // Client-side validation
+    if (!lambdaUrl) return showToast('error', 'Please enter your API Gateway URL.');
+    if (!secret)    return showToast('error', 'Please enter the admin secret.');
+    if (!title)     return showToast('error', 'Please enter a tip title.');
+    if (filledPoints.length === 0) return showToast('error', 'Add at least one key point.');
+
+    // Lock UI
+    const btn = document.getElementById('sendBtn');
+    btn.disabled = true;
+    document.getElementById('sendBtnIcon').textContent = '⏳';
+    document.getElementById('sendBtnText').textContent = 'Sending…';
+    hideToast();
+
+    const payload = {
+      secret,
+      title,
+      intro: intro || undefined,
+      points: filledPoints
+    };
+
+    try {
+      const res  = await fetch(lambdaUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.status === 403) {
+        showToast('error', '🔒 Unauthorised — check your admin secret.');
+        return;
+      }
+      if (!res.ok) {
+        showToast('error', `Error ${res.status}: ${data.body || 'Unknown error'}`);
+        return;
+      }
+
+      // Show results card
+      const sent   = data.sent        ?? 0;
+      const failed = data.failed_count ?? 0;
+      document.getElementById('subCount').textContent  = sent;
+      document.getElementById('failCount').textContent = failed;
+      document.getElementById('resultsTime').textContent =
+        `Sent on ${new Date().toLocaleString()}`;
+
+      if (failed > 0 && data.failed?.length) {
+        document.getElementById('failedList').style.display = 'block';
+        document.getElementById('failedItems').innerHTML =
+          data.failed.map(f => `<div>⚠ ${escHtml(f.email)} — ${escHtml(f.reason)}</div>`).join('');
+      } else {
+        document.getElementById('failedList').style.display = 'none';
+      }
+
+      document.getElementById('resultsCard').style.display = 'block';
+      document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      showToast('success', `✓ Broadcast complete — ${sent} email${sent !== 1 ? 's' : ''} sent successfully.`);
+
+    } catch (err) {
+      showToast('error', `Network error: ${err.message}. Check the Lambda URL and CORS settings.`);
+    } finally {
+      btn.disabled = false;
+      document.getElementById('sendBtnIcon').textContent = '🌿';
+      document.getElementById('sendBtnText').textContent = 'Send to All Subscribers';
+    }
+  }
+
+  // ── TOAST HELPERS ─────────────────────────────────────────────────────────
+  function showToast(type, msg) {
+    const t = document.getElementById('toast');
+    t.className = `toast ${type} show`;
+    t.textContent = msg;
+  }
+  function hideToast() {
+    document.getElementById('toast').className = 'toast';
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────────────────
+  renderPoints();
+</script>
+</body>
+</html>
