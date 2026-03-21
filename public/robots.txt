@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin_panel.html
+
+Sitemap: https://healthyeatingmanual.site/sitemap.xml

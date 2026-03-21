@@ -3,6 +3,7 @@ import "../styles/global.css";
 import "../styles/Tools.css";
 import Navbar from "../components/nav.jsx";
 import Footer from "../components/footer.jsx";
+import Seo from "../components/Seo.jsx";
 
 /* ─── unit helpers ─────────────────────────── */
 const kgToLbs = (kg) => +(kg * 2.20462).toFixed(1);
@@ -1112,6 +1113,10 @@ function Tools() {
 
   return (
     <div className="page">
+      <Seo
+        title="Nutrition & Fitness Tools | The Healthy Eating Manual"
+        description="Use free nutrition and fitness calculators including BMI, TDEE, macros, water intake, and body fat estimators."
+      />
       <Navbar />
       <main>
         <section className="tools-hero">

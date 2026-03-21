@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import Seo from "../components/Seo.jsx";
 
 // ─── API Configuration ────────────────────────────────────────────────────────
 const API_KEY = import.meta.env.VITE_API_KEYS; // ← Replace with your USDA FoodData Central API key
@@ -614,6 +615,10 @@ export default function FoodNutrientExplorer() {
 
   return (
     <div style={S.root}>
+      <Seo
+        title="Food Nutrient Explorer | The Healthy Eating Manual"
+        description="Search USDA FoodData foods and explore nutrient-rich options by protein, carbs, vitamins, and minerals."
+      />
       <style>{`
         @keyframes slideUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
         @keyframes spin    { to   { transform:rotate(360deg); } }

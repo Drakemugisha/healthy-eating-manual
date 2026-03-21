@@ -1,10 +1,15 @@
 import "../styles/global.css";
 import Navbar from "../components/nav.jsx";
 import Footer from "../components/footer.jsx";
+import Seo from "../components/Seo.jsx";
 
 function Faq() {
   return (
     <div className="page">
+      <Seo
+        title="FAQ | The Healthy Eating Manual"
+        description="Read common questions about The Healthy Eating Manual, including diet approach, expected results, and who this guide is for."
+      />
       <Navbar />
       <main>
         <section className="section">

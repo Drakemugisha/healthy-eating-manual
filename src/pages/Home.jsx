@@ -5,6 +5,7 @@ import "../styles/Home.css";
 import Navbar from "../components/nav.jsx";
 import Footer from "../components/footer.jsx";
 import NewsletterSignup from "../components/NewsletterSignup.jsx";
+import Seo from "../components/Seo.jsx";
 
 /* ── Scroll-reveal hook ── */
 function useReveal() {
@@ -282,6 +283,10 @@ function Home() {
 
   return (
     <div className="page">
+      <Seo
+        title="The Healthy Eating Manual | Build Better Eating Habits"
+        description="Learn a practical, sustainable system for healthy eating with The Healthy Eating Manual. Explore guidance, tools, and actionable steps."
+      />
       <Navbar />
       <main>
         {/* ══ HERO ══ */}
